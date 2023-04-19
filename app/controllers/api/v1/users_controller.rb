@@ -1,6 +1,7 @@
-# app/controllers/api/v1/users_controller.rb
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
+
+  # skip_before_action :authenticate
 
   def index
     @users = User.all

@@ -5,13 +5,18 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  root to: redirect('/api-docs')
 
   # config/routes.rb
 namespace :api do
   namespace :v1 do
-    resources :items
+    resources :items, only: [:index, :create, :destroy]
     resources :users
+    resources :sales
+    resources :orders
   end
 end
 
+post '/signup', to: 'users#create'
+post '/login', to: 'sessions#create'
 end

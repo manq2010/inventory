@@ -1,9 +1,12 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/items', type: :request do
-  path '/api/v1/items' do
-    get('list items') do
+RSpec.describe 'api/v1/orders', type: :request do
+
+  path '/api/v1/orders' do
+
+    get('list orders') do
       response(200, 'successful') do
+
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -15,8 +18,9 @@ RSpec.describe 'api/v1/items', type: :request do
       end
     end
 
-    post('create item') do
+    post('create order') do
       response(200, 'successful') do
+
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -29,11 +33,11 @@ RSpec.describe 'api/v1/items', type: :request do
     end
   end
 
-  path '/api/v1/items/{id}' do
+  path '/api/v1/orders/{id}' do
     # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :string, description: 'id'
 
-    get('show item') do
+    get('show order') do
       response(200, 'successful') do
         let(:id) { '123' }
 
@@ -48,7 +52,7 @@ RSpec.describe 'api/v1/items', type: :request do
       end
     end
 
-    patch('update item') do
+    patch('update order') do
       response(200, 'successful') do
         let(:id) { '123' }
 
@@ -63,7 +67,7 @@ RSpec.describe 'api/v1/items', type: :request do
       end
     end
 
-    put('update item') do
+    put('update order') do
       response(200, 'successful') do
         let(:id) { '123' }
 
@@ -78,7 +82,7 @@ RSpec.describe 'api/v1/items', type: :request do
       end
     end
 
-    delete('delete item') do
+    delete('delete order') do
       response(200, 'successful') do
         let(:id) { '123' }
 

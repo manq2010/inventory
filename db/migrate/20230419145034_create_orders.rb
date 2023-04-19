@@ -4,6 +4,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.string :pic
       t.decimal :total_price
       t.string :status
+      t.references :user, null: false, foreign_key: true
 
       t.timestamps
     end

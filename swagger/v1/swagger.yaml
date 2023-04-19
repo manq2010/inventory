@@ -6,16 +6,12 @@ info:
 paths:
   "/api/v1/items":
     get:
-      summary: List of items
-      tags:
-      - Items
+      summary: list items
       responses:
         '200':
           description: successful
     post:
-      summary: Create an item
-      tags:
-      - Items
+      summary: create item
       responses:
         '200':
           description: successful
@@ -28,51 +24,113 @@ paths:
       schema:
         type: string
     get:
-      summary: Show Specific Item using {id}
-      tags:
-      - Items
+      summary: show item
       responses:
         '200':
           description: successful
-        '400':
-          description: Item not found
     patch:
       summary: update item
-      tags:
-      - Items
       responses:
         '200':
           description: successful
     put:
       summary: update item
-      tags:
-      - Items
       responses:
         '200':
           description: successful
     delete:
       summary: delete item
-      tags:
-      - Items
       responses:
-        '202':
-          description: Item deleted successfully
-        '404':
-          description: Item not found
-  "/api/v1/users":
+        '200':
+          description: successful
+  "/api/v1/orders":
     get:
-      summary: List all users
-      tags:
-      - Users
+      summary: list orders
       responses:
         '200':
           description: successful
     post:
-      summary: Add a new user
-      tags:
-      - Users
+      summary: create order
       responses:
-        '201':
+        '200':
+          description: successful
+  "/api/v1/orders/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show order
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update order
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update order
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete order
+      responses:
+        '200':
+          description: successful
+  "/api/v1/sales":
+    get:
+      summary: list sales
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create sale
+      responses:
+        '200':
+          description: successful
+  "/api/v1/sales/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show sale
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update sale
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update sale
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete sale
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users":
+    get:
+      summary: list users
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create user
+      responses:
+        '200':
           description: successful
   "/api/v1/users/{id}":
     parameters:
@@ -83,38 +141,25 @@ paths:
       schema:
         type: string
     get:
-      summary: Show Specific details for user by {id}
-      tags:
-      - Users
+      summary: show user
       responses:
         '200':
           description: successful
     patch:
       summary: update user
-      tags:
-      - Users
       responses:
         '200':
           description: successful
     put:
       summary: update user
-      tags:
-      - Users
       responses:
         '200':
           description: successful
     delete:
       summary: delete user
-      tags:
-      - Users
       responses:
         '200':
           description: successful
-tags:
-- name: Users
-  description: Operations related to users
-- name: Items
-  description: Operations related to items
 servers:
 - url: http://{defaultHost}
   variables:
