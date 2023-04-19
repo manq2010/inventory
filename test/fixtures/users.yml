@@ -4,10 +4,10 @@ one:
   name: MyString
   email: MyString
   username: MyString
-  type: 
+  role: admin
 
 two:
   name: MyString
   email: MyString
   username: MyString
-  type: 
+  role: user

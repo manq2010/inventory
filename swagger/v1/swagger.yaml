@@ -6,15 +6,62 @@ info:
 paths:
   "/api/v1/items":
     get:
-      summary: list items
+      summary: List of items
+      tags:
+      - Items
+      parameters:
+      - name: filter
+        in: query
+        description: Filter items
+        required: false
+        schema:
+          type: boolean
       responses:
         '200':
           description: successful
     post:
-      summary: create item
+      summary: Create an Item
+      tags:
+      - Items
+      parameters: []
       responses:
-        '200':
-          description: successful
+        '201':
+          description: Created Item successfully
+        '400':
+          description: Operation not successful because of missing arguments or broken
+            data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: 4-in-1 toilet
+                buying_price:
+                  type: decimal
+                  default: 150.51
+                selling_price:
+                  type: decimal
+                  default: 170.21
+                quantity:
+                  type: number
+                  default: 20
+                category:
+                  type: string
+                  default: Toilets
+                images:
+                  type: array
+                  default:
+                  - https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2021-03-24-at-15.37.25-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpeg
+                  - https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/CHILLERS-26-1024x728-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpeg
+              required:
+              - name
+              - buying_price
+              - quantity
+              - category
+              - images
   "/api/v1/items/{id}":
     parameters:
     - name: id
@@ -24,25 +71,37 @@ paths:
       schema:
         type: string
     get:
-      summary: show item
+      summary: Show specific item using {id}
+      tags:
+      - Items
       responses:
         '200':
           description: successful
+        '400':
+          description: Car not found
     patch:
       summary: update item
+      tags:
+      - Items
       responses:
         '200':
           description: successful
     put:
       summary: update item
+      tags:
+      - Items
       responses:
         '200':
           description: successful
     delete:
-      summary: delete item
+      summary: Delete an Item by {id}
+      tags:
+      - Items
       responses:
-        '200':
-          description: successful
+        '202':
+          description: Deleted Item successfully
+        '404':
+          description: Item not found
   "/api/v1/orders":
     get:
       summary: list orders
@@ -123,15 +182,49 @@ paths:
           description: successful
   "/api/v1/users":
     get:
-      summary: list users
+      summary: List of users
+      tags:
+      - Users
       responses:
         '200':
           description: successful
+  "/api/v1/signup":
     post:
-      summary: create user
+      summary: Create a user
+      tags:
+      - Users
+      parameters: []
       responses:
-        '200':
-          description: successful
+        '201':
+          description: User created successfully
+        '400':
+          description: Username already exists / blank username
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: test
+                email:
+                  type: string
+                  default: test@test.com
+                username:
+                  type: string
+                  default: tester
+                password:
+                  type: string
+                  default: test@123
+                role:
+                  type: string
+                  default: admin
+              required:
+              - name
+              - email
+              - username
+              - password
   "/api/v1/users/{id}":
     parameters:
     - name: id
@@ -142,26 +235,73 @@ paths:
         type: string
     get:
       summary: show user
+      tags:
+      - Users
       responses:
         '200':
           description: successful
     patch:
       summary: update user
+      tags:
+      - Users
       responses:
         '200':
           description: successful
     put:
       summary: update user
+      tags:
+      - Users
       responses:
         '200':
           description: successful
     delete:
       summary: delete user
+      tags:
+      - Users
       responses:
         '200':
           description: successful
+  "/login":
+    post:
+      summary: Create a session
+      tags:
+      - Users
+      parameters: []
+      responses:
+        '200':
+          description: Successfully logged in
+        '401':
+          description: Invalid email or password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  default: test@test.com
+                password:
+                  type: string
+                  default: test@123
+              required:
+              - email
+              - password
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+- name: Users
+  description: Operations related to users
+- name: Items
+  description: Operations related to items
+security:
+- bearerAuth: []
 servers:
 - url: http://{defaultHost}
   variables:
     defaultHost:
-      default: localhost:3000/
+      default: localhost:3000

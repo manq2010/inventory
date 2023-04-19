@@ -1,5 +1,5 @@
 class Api::V1::ItemsController < ApplicationController
- # api/v1/items
+  # api/v1/items
   def index
     # @items = Item.all
     # render json: @items
@@ -33,15 +33,6 @@ class Api::V1::ItemsController < ApplicationController
 
   # api/v1/items
   def create
-    # @item = Item.new(item_params)
-
-    # if @item.save
-    #   render json: @item, status: :created
-    # else
-    #   render json: @item.errors, status: :unprocessable_entity
-    # end
-    # item = Item.new(car_params.merge(user_id: current_user_id))
-    
     item = Item.new(item_params)
 
     if item.save
@@ -69,14 +60,32 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   # api/v1/items/{id}
+  # api/v1/items
   def update
-    # if @item.update(item_params)
-    #   render json: @item
-    # else
-    #   render json: @item.errors, status: :unprocessable_entity
-    # end
+    item = Item.find(params[:id])
 
-    # NB: take the create function and use it to update
+    if item.update(item_params)
+      # Update associated images
+      @images = params[:images].map do |image|
+        { url: image, item_id: item.id }
+      end
+
+      Image.where(item_id: item.id).delete_all
+      Image.insert_all(@images)
+      render json: {
+        operation: "Item updated successfully with id: #{item.id}",
+        data: {
+          item_id: item.id
+        }
+      }, status: :ok
+    else
+      render json: {
+        operation: 'Not successful',
+        data: {
+          errors: item.errors
+        }
+      }, status: :bad_request
+    end
   end
 
   # api/v1/items/{id}
