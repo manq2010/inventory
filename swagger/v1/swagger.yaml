@@ -1,0 +1,122 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/items":
+    get:
+      summary: List of items
+      tags:
+      - Items
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Create an item
+      tags:
+      - Items
+      responses:
+        '200':
+          description: successful
+  "/api/v1/items/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Specific Item using {id}
+      tags:
+      - Items
+      responses:
+        '200':
+          description: successful
+        '400':
+          description: Item not found
+    patch:
+      summary: update item
+      tags:
+      - Items
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update item
+      tags:
+      - Items
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete item
+      tags:
+      - Items
+      responses:
+        '202':
+          description: Item deleted successfully
+        '404':
+          description: Item not found
+  "/api/v1/users":
+    get:
+      summary: List all users
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: Add a new user
+      tags:
+      - Users
+      responses:
+        '201':
+          description: successful
+  "/api/v1/users/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show Specific details for user by {id}
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete user
+      tags:
+      - Users
+      responses:
+        '200':
+          description: successful
+tags:
+- name: Users
+  description: Operations related to users
+- name: Items
+  description: Operations related to items
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000/
