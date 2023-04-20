@@ -3,10 +3,10 @@ require 'swagger_helper'
 RSpec.describe 'api/v1/users', type: :request do
   user_properties = {
     name: { type: :string, default: 'test' },
-    email: { type: :string, default: 'test@test.com' },
-    username: { type: :string, default: 'tester' },
-    password: { type: :string, default: 'test@123' },
-    role: { type: :string, default: 'admin' }
+    # email: { type: :string, default: 'test@test.com' },
+    # username: { type: :string, default: 'tester' },
+    # password: { type: :string, default: 'test@123' },
+    # role: { type: :string, default: 'admin' }
   }
 
   path '/api/v1/users' do
@@ -26,7 +26,7 @@ RSpec.describe 'api/v1/users', type: :request do
   end
 
   path '/api/v1/signup' do
-    post('Create a user') do
+    post('Create a new user') do
       tags 'Users'
       response(201, 'User created successfully') do
         consumes 'application/json'
@@ -34,7 +34,7 @@ RSpec.describe 'api/v1/users', type: :request do
         parameter name: :user, in: :body, schema: {
           type: :object,
           properties: user_properties,
-          required: %w[name email username password]
+          required: %w[name]
         }
         run_test!
       end

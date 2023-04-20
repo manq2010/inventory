@@ -190,7 +190,7 @@ paths:
           description: successful
   "/api/v1/signup":
     post:
-      summary: Create a user
+      summary: Create a new user
       tags:
       - Users
       parameters: []
@@ -208,23 +208,8 @@ paths:
                 name:
                   type: string
                   default: test
-                email:
-                  type: string
-                  default: test@test.com
-                username:
-                  type: string
-                  default: tester
-                password:
-                  type: string
-                  default: test@123
-                role:
-                  type: string
-                  default: admin
               required:
               - name
-              - email
-              - username
-              - password
   "/api/v1/users/{id}":
     parameters:
     - name: id
