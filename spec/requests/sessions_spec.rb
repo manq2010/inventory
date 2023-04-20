@@ -10,8 +10,8 @@ RSpec.describe 'sessions', type: :request do
         parameter name: :session, in: :body, schema: {
           type: :object,
           properties: {
-            email: { type: :string, default: 'test@test.com' },
-            password: { type: :string, default: 'test@123' }
+            name: { type: :string, default: 'test' }
+            # password: { type: :string, default: 'test@123' }
           },
           required: %w[email password]
         }

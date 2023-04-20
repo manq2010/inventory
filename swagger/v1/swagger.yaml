@@ -9,13 +9,7 @@ paths:
       summary: List of items
       tags:
       - Items
-      parameters:
-      - name: filter
-        in: query
-        description: Filter items
-        required: false
-        schema:
-          type: boolean
+      parameters: []
       responses:
         '200':
           description: successful
@@ -225,6 +219,8 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: User with Id not found
     patch:
       summary: update user
       tags:
@@ -263,12 +259,9 @@ paths:
             schema:
               type: object
               properties:
-                email:
+                name:
                   type: string
-                  default: test@test.com
-                password:
-                  type: string
-                  default: test@123
+                  default: test
               required:
               - email
               - password

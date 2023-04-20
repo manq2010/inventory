@@ -21,10 +21,10 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:name])
     if user
       token = JWT.encode({ user_id: user.id }, secret, 'HS256')
-      render json: { name: user.name, token: }
+      # decoded_token = JWT.decode token, secret, true, { :algorithm => 'HS256' }
+      render json: { token: token }
     else
       render json: { error: 'Invalid username' }, status: :unauthorized
     end
   end
 end
-

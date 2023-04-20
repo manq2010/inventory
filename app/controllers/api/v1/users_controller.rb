@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+  # before_action :set_user, only: %i[show update destroy]
   skip_before_action :authenticate, only: [:create]
 
   def index
@@ -8,7 +8,24 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    render json: @user
+    # render json: @user
+    
+    # item = Item.find_by(id: params[:id]).as_json(include: :images)
+    user = User.find(params[:id])
+    if @user
+      render json: {
+        data: {
+          users: user
+        }
+      }, status: :ok
+    else
+      render json: {
+        data: {
+          users: user,
+          errors: "Couldn't find a user with id: #{params[:id]}"
+        }
+      }, status: :bad_request
+    end
   end
 
   def create

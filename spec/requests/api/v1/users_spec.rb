@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 RSpec.describe 'api/v1/users', type: :request do
   user_properties = {
-    name: { type: :string, default: 'test' },
+    name: { type: :string, default: 'test' }
     # email: { type: :string, default: 'test@test.com' },
     # username: { type: :string, default: 'tester' },
     # password: { type: :string, default: 'test@123' },
@@ -59,6 +59,10 @@ RSpec.describe 'api/v1/users', type: :request do
             }
           }
         end
+        run_test!
+      end
+
+      response(404, 'User with Id not found') do
         run_test!
       end
     end
