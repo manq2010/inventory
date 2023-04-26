@@ -125,11 +125,15 @@ paths:
   "/api/v1/orders":
     get:
       summary: list orders
+      tags:
+      - Orders
       responses:
         '200':
           description: successful
     post:
       summary: create order
+      tags:
+      - Orders
       responses:
         '200':
           description: successful
@@ -143,35 +147,71 @@ paths:
         type: string
     get:
       summary: show order
+      tags:
+      - Orders
       responses:
         '200':
           description: successful
     patch:
       summary: update order
+      tags:
+      - Orders
       responses:
         '200':
           description: successful
     put:
       summary: update order
+      tags:
+      - Orders
       responses:
         '200':
           description: successful
     delete:
       summary: delete order
+      tags:
+      - Orders
       responses:
         '200':
           description: successful
   "/api/v1/sales":
     get:
-      summary: list sales
+      summary: List of sales
+      tags:
+      - Sales
+      parameters: []
       responses:
         '200':
           description: successful
     post:
-      summary: create sale
+      summary: Create a sale
+      tags:
+      - Sales
+      parameters: []
       responses:
-        '200':
-          description: successful
+        '201':
+          description: Created Item successfully
+        '400':
+          description: Operation not successful because of missing arguments or broken
+            data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: toilets to company x
+                total_price:
+                  type: decimal
+                  default: 0
+                user_id:
+                  type: number
+                  default: '1'
+              required:
+              - name
+              - total_price
+              - user_id
   "/api/v1/sales/{id}":
     parameters:
     - name: id
@@ -181,22 +221,23 @@ paths:
       schema:
         type: string
     get:
-      summary: show sale
-      responses:
-        '200':
-          description: successful
-    patch:
-      summary: update sale
+      summary: Show a sale
+      tags:
+      - Sales
       responses:
         '200':
           description: successful
     put:
       summary: update sale
+      tags:
+      - Sales
       responses:
         '200':
           description: successful
     delete:
       summary: delete sale
+      tags:
+      - Sales
       responses:
         '200':
           description: successful
@@ -309,6 +350,10 @@ tags:
   description: Operations related to users
 - name: Items
   description: Operations related to items
+- name: Sales
+  description: Operations related to Sales
+- name: Orders
+  description: Operations related to Orders
 security:
 - bearerAuth: []
 servers:

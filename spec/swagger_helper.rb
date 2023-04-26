@@ -9,8 +9,9 @@ security = {
 }
 all_tags = [
   { name: 'Users', description: 'Operations related to users' },
-  { name: 'Items', description: 'Operations related to items' }
-  # { name: 'Reservations', description: 'Operations related to reservations' }
+  { name: 'Items', description: 'Operations related to items' },
+  { name: 'Sales', description: 'Operations related to Sales' },
+  { name: 'Orders', description: 'Operations related to Orders' }
 ]
 
 RSpec.configure do |config|

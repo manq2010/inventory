@@ -61,7 +61,6 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   # api/v1/items/{id}
-  # api/v1/items
   def update
     item = Item.find(params[:id])
 

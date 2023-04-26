@@ -12,7 +12,7 @@ namespace :api do
   namespace :v1 do
     resources :items, only: [:index, :create, :destroy, :show, :update]
     resources :users, only: [:index, :show, :update, :destroy]
-    resources :sales
+    resources :sales, only: [:index, :create, :destroy, :show, :update]
     resources :orders
     post '/signup', to: 'users#create'
   end
