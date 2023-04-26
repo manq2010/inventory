@@ -73,20 +73,46 @@ paths:
           description: successful
         '400':
           description: Car not found
-    patch:
-      summary: update item
-      tags:
-      - Items
-      responses:
-        '200':
-          description: successful
     put:
       summary: update item
       tags:
       - Items
+      parameters: []
       responses:
         '200':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: 4-in-1 toilet
+                buying_price:
+                  type: decimal
+                  default: 150.51
+                selling_price:
+                  type: decimal
+                  default: 170.21
+                quantity:
+                  type: number
+                  default: 20
+                category:
+                  type: string
+                  default: Toilets
+                images:
+                  type: array
+                  default:
+                  - https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2021-03-24-at-15.37.25-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpeg
+                  - https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/CHILLERS-26-1024x728-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpeg
+              required:
+              - name
+              - buying_price
+              - quantity
+              - category
+              - images
     delete:
       summary: Delete an Item by {id}
       tags:
@@ -221,20 +247,25 @@ paths:
           description: successful
         '404':
           description: User with Id not found
-    patch:
-      summary: update user
-      tags:
-      - Users
-      responses:
-        '200':
-          description: successful
     put:
       summary: update user
       tags:
       - Users
+      parameters: []
       responses:
         '200':
           description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: test
+              required:
+              - name
     delete:
       summary: delete user
       tags:
@@ -242,6 +273,8 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: User with Id not found
   "/login":
     post:
       summary: Create a session

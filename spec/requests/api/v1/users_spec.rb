@@ -67,35 +67,20 @@ RSpec.describe 'api/v1/users', type: :request do
       end
     end
 
-    patch('update user') do
-      tags 'Users'
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
     put('update user') do
       tags 'Users'
       response(200, 'successful') do
         let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
+        response(200, 'User updated successfully') do
+          consumes 'application/json'
+          produces 'application/json'
+          parameter name: :user, in: :body, schema: {
+            type: :object,
+            properties: user_properties,
+            required: %w[name]
           }
+          run_test!
         end
-        run_test!
       end
     end
 
@@ -111,6 +96,10 @@ RSpec.describe 'api/v1/users', type: :request do
             }
           }
         end
+        run_test!
+      end
+
+      response(404, 'User with Id not found') do
         run_test!
       end
     end

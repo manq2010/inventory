@@ -1,4 +1,6 @@
 class Api::V1::ItemsController < ApplicationController
+  skip_before_action :authenticate
+
   # api/v1/items
   def index
     # @items = Item.all
@@ -15,7 +17,7 @@ class Api::V1::ItemsController < ApplicationController
   def show
     # render json: @item
     item = Item.find_by(id: params[:id]).as_json(include: :images)
-    if car
+    if item
       render json: {
         data: {
           items: item
@@ -24,7 +26,6 @@ class Api::V1::ItemsController < ApplicationController
     else
       render json: {
         data: {
-          items: item,
           errors: "Couldn't find a item with id: #{params[:id]}"
         }
       }, status: :bad_request
@@ -90,13 +91,10 @@ class Api::V1::ItemsController < ApplicationController
 
   # api/v1/items/{id}
   def destroy
-    # @item.destroy
-    # head :no_content
-
-    item = Item.find_by(id: params[:id], user_id: current_user_id)
+    item = Item.find_by(id: params[:id])
 
     if item&.destroy
-      render json: { operation: "Car deleted with id #{item.id}" }, status: :accepted
+      render json: { operation: "Item deleted with id #{item.id}" }, status: :accepted
     else
       render json: {
         operation: "Couldn't delete item with id #{params[:id]}.",

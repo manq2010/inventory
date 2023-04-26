@@ -57,35 +57,20 @@ RSpec.describe 'api/v1/items', type: :request do
       end
     end
 
-    patch('update item') do
-      tags 'Items'
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
     put('update item') do
       tags 'Items'
       response(200, 'successful') do
         let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
+        response(200, 'User updated successfully') do
+          consumes 'application/json'
+          produces 'application/json'
+          parameter name: :item, in: :body, schema: {
+            type: :object,
+            properties: item_properties,
+            required: %w[name buying_price quantity category images]
           }
+          run_test!
         end
-        run_test!
       end
     end
 

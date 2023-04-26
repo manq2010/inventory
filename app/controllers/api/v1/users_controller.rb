@@ -1,6 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   # before_action :set_user, only: %i[show update destroy]
-  skip_before_action :authenticate, only: [:create]
+  # skip_before_action :authenticate, only: [:create]
+  skip_before_action :authenticate
 
   def index
     @users = User.all
@@ -8,11 +9,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    # render json: @user
-    
-    # item = Item.find_by(id: params[:id]).as_json(include: :images)
     user = User.find(params[:id])
-    if @user
+    if user
       render json: {
         data: {
           users: user
@@ -29,43 +27,50 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(name: params[:name])
-    if @user.save
+    user = User.new(name: params[:name])
+    if user.save
       render json: { message: 'User created successfully' }, status: :created
     else
-      render json: { error: "username #{@user.errors[:name].first}" }, status: :bad_request
+      render json: { error: "username #{user.errors[:name].first}" }, status: :bad_request
     end
   end
 
-  # def create
-  #   @user = User.new(user_params)
-  #   # @user.password_digest = BCrypt::Password.create(user_params[:password])
-
-  #   if @user.save
-  #     render json: { message: 'User created successfully' }, status: :created
-  #   else
-  #     render json: { error: "username #{@user.errors[:name].first}" }, status: :bad_request
-  #   end
-  # end
-
   def update
-    if @user.update(user_params)
-      render json: @user
+    user = User.find(params[:id])
+
+    if user.update(name: params[:name])
+      render json: {
+        data: {
+          users: user
+        }
+      }, status: :ok
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: {
+        data: {
+          users: user,
+          errors: "Couldn't update user with id: #{params[:id]}"
+        }
+      }, status: :bad_request
     end
   end
 
   def destroy
-    @user.destroy
-    head :no_content
+    user = User.find(params[:id])
+
+    if user&.destroy
+      render json: {
+        message: "User with id: #{params[:id]} deleted successfully"
+      }, status: :accepted
+    else
+      render json: {
+        data: {
+          errors: "Couldn't delete user with id: #{params[:id]}"
+        }
+      }, status: :not_found
+    end
   end
 
   private
-
-  # def set_user
-  #   @user = User.find(params[:id])
-  # end
 
   def user_params
     params.require(:user).permit(:name, :email, :username, :password, :role)
