@@ -11,7 +11,8 @@ all_tags = [
   { name: 'Users', description: 'Operations related to users' },
   { name: 'Items', description: 'Operations related to items' },
   { name: 'Sales', description: 'Operations related to Sales' },
-  { name: 'Orders', description: 'Operations related to Orders' }
+  { name: 'Orders', description: 'Operations related to Orders' },
+  { name: 'Sales-Items', description: 'Operations related to Sales - Items join table' }
 ]
 
 RSpec.configure do |config|

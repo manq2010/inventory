@@ -41,7 +41,7 @@ paths:
                   default: 170.21
                 quantity:
                   type: number
-                  default: 20
+                  default: 10
                 category:
                   type: string
                   default: Toilets
@@ -98,7 +98,7 @@ paths:
                   default: 170.21
                 quantity:
                   type: number
-                  default: 20
+                  default: 10
                 category:
                   type: string
                   default: Toilets
@@ -189,7 +189,7 @@ paths:
       parameters: []
       responses:
         '201':
-          description: Created Item successfully
+          description: Created Sale successfully
         '400':
           description: Operation not successful because of missing arguments or broken
             data
@@ -212,6 +212,7 @@ paths:
               - name
               - total_price
               - user_id
+              - items
   "/api/v1/sales/{id}":
     parameters:
     - name: id
@@ -227,13 +228,36 @@ paths:
       responses:
         '200':
           description: successful
+        '400':
+          description: Car not found
     put:
-      summary: update sale
+      summary: Update a sale
       tags:
       - Sales
+      parameters: []
       responses:
         '200':
           description: successful
+        '404':
+          description: Sale not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: toilets to company x
+                total_price:
+                  type: decimal
+                  default: 0
+                user_id:
+                  type: number
+                  default: '1'
+              required:
+              - name
+              - total_price
     delete:
       summary: delete sale
       tags:
@@ -241,6 +265,113 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: Sale not found
+  "/api/v1/sales/{id}/items":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Add item to sale
+      tags:
+      - Sales-Items
+      description: Add item to sale
+      parameters: []
+      responses:
+        '200':
+          description: Created item and added to sale successfully
+        '400':
+          description: Operation not successful because of missing arguments or broken
+            data
+        '404':
+          description: Sale not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: number
+                  default: '1'
+              required:
+              - name
+              - selling_price
+              - quantity
+    get:
+      summary: Show Sale items data
+      tags:
+      - Sales-Items
+      description: Get sale items data
+      responses:
+        '200':
+          description: Returns the sale items data
+        '404':
+          description: Sale not found
+  "/api/v1/sales/{id}/items/{item_id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    - name: item_id
+      in: path
+      description: item_id
+      required: true
+      schema:
+        type: string
+    put:
+      summary: Update item in sale
+      tags:
+      - Sales-Items
+      description: Update item in sale
+      parameters: []
+      responses:
+        '200':
+          description: Item in sale updated successfully
+        '400':
+          description: Operation not successful because of missing arguments or broken
+            data
+        '404':
+          description: Sale or item not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: 3-in-1 toilet luxury
+                selling_price:
+                  type: number
+                  format: decimal
+                  default: 150.21
+                quantity:
+                  type: integer
+                  default: 1
+                category:
+                  type: string
+                  default: Category 2
+              required:
+              - selling_price
+              - item_id
+    delete:
+      summary: Delete item from sale
+      tags:
+      - Sales-Items
+      description: Delete item from sale
+      responses:
+        '200':
+          description: Item deleted successfully
+        '404':
+          description: Sale or item not found
   "/api/v1/users":
     get:
       summary: List of users
@@ -354,6 +485,8 @@ tags:
   description: Operations related to Sales
 - name: Orders
   description: Operations related to Orders
+- name: Sales-Items
+  description: Operations related to Sales - Items join table
 security:
 - bearerAuth: []
 servers:

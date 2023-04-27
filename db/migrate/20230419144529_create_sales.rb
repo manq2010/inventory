@@ -4,7 +4,7 @@ class CreateSales < ActiveRecord::Migration[7.0]
       t.string :name
       t.decimal :total_price, default: 0
       # t.datetime :date
-      t.references :user, null: false, foreign_key: true
+      # t.references :user, null: false, foreign_key: true
 
       t.timestamps
     end
