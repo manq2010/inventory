@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_222631) do
     t.string "name"
     t.decimal "buying_price"
     t.decimal "selling_price"
-    t.integer "quantity"
+    t.integer "item_quantity"
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_222631) do
   create_table "items_sales", id: false, force: :cascade do |t|
     t.bigint "item_id", null: false
     t.bigint "sale_id", null: false
+    t.integer "quantity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id", "sale_id"], name: "index_items_sales_on_item_id_and_sale_id"

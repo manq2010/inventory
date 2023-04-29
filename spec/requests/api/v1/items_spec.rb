@@ -5,7 +5,7 @@ RSpec.describe 'api/v1/items', type: :request do
     name: { type: :string, default: '4-in-1 toilet' },
     buying_price: { type: :decimal, default: 150.51 },
     selling_price: { type: :decimal, default: 170.21 },
-    quantity: { type: :number, default: 10 },
+    item_quantity: { type: :number, default: 10 },
     category: { type: :string, default: 'Toilets' },
     images: { type: :array, default: [
       'https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/WhatsApp-Image-2021-03-24-at-15.37.25-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpeg',
@@ -31,7 +31,7 @@ RSpec.describe 'api/v1/items', type: :request do
         parameter name: :item, in: :body, schema: {
           type: :object,
           properties: item_properties,
-          required: %w[name buying_price quantity category images]
+          required: %w[name buying_price item_quantity category images]
         }
         run_test!
       end
@@ -67,7 +67,7 @@ RSpec.describe 'api/v1/items', type: :request do
           parameter name: :item, in: :body, schema: {
             type: :object,
             properties: item_properties,
-            required: %w[name buying_price quantity category images]
+            required: %w[name buying_price item_quantity category images]
           }
           run_test!
         end

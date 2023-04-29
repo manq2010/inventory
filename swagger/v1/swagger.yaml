@@ -4,6 +4,109 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/sales/{id}/items":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Add item to sale
+      tags:
+      - Sales-Items
+      description: Add item to sale
+      parameters: []
+      responses:
+        '200':
+          description: Created item and added to sale successfully
+        '400':
+          description: Operation not successful because of missing arguments or broken
+            data
+        '404':
+          description: Sale not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: number
+                  default: '1'
+              required:
+              - item_id
+    get:
+      summary: Show Sale items data
+      tags:
+      - Sales-Items
+      description: Get sale items data
+      responses:
+        '200':
+          description: Returns the sale items data
+        '404':
+          description: Sale not found
+  "/api/v1/sales/{id}/items/{item_id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    - name: item_id
+      in: path
+      description: item_id
+      required: true
+      schema:
+        type: string
+    put:
+      summary: Update item in sale
+      tags:
+      - Sales-Items
+      description: Update item in sale
+      parameters: []
+      responses:
+        '200':
+          description: Item in sale updated successfully
+        '400':
+          description: Operation not successful because of missing arguments or broken
+            data
+        '404':
+          description: Sale or item not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: 3-in-1 toilet luxury
+                selling_price:
+                  type: number
+                  format: decimal
+                  default: 150.21
+                quantity:
+                  type: integer
+                  default: 1
+                category:
+                  type: string
+                  default: Category 2
+              required:
+              - selling_price
+              - item_id
+    delete:
+      summary: Delete item from sale
+      tags:
+      - Sales-Items
+      description: Delete item from sale
+      responses:
+        '200':
+          description: Item deleted successfully
+        '404':
+          description: Sale or item not found
   "/api/v1/items":
     get:
       summary: List of items
@@ -39,7 +142,7 @@ paths:
                 selling_price:
                   type: decimal
                   default: 170.21
-                quantity:
+                item_quantity:
                   type: number
                   default: 10
                 category:
@@ -53,7 +156,7 @@ paths:
               required:
               - name
               - buying_price
-              - quantity
+              - item_quantity
               - category
               - images
   "/api/v1/items/{id}":
@@ -96,7 +199,7 @@ paths:
                 selling_price:
                   type: decimal
                   default: 170.21
-                quantity:
+                item_quantity:
                   type: number
                   default: 10
                 category:
@@ -110,7 +213,7 @@ paths:
               required:
               - name
               - buying_price
-              - quantity
+              - item_quantity
               - category
               - images
     delete:
@@ -267,111 +370,6 @@ paths:
           description: successful
         '404':
           description: Sale not found
-  "/api/v1/sales/{id}/items":
-    parameters:
-    - name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    post:
-      summary: Add item to sale
-      tags:
-      - Sales-Items
-      description: Add item to sale
-      parameters: []
-      responses:
-        '200':
-          description: Created item and added to sale successfully
-        '400':
-          description: Operation not successful because of missing arguments or broken
-            data
-        '404':
-          description: Sale not found
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                item_id:
-                  type: number
-                  default: '1'
-              required:
-              - name
-              - selling_price
-              - quantity
-    get:
-      summary: Show Sale items data
-      tags:
-      - Sales-Items
-      description: Get sale items data
-      responses:
-        '200':
-          description: Returns the sale items data
-        '404':
-          description: Sale not found
-  "/api/v1/sales/{id}/items/{item_id}":
-    parameters:
-    - name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    - name: item_id
-      in: path
-      description: item_id
-      required: true
-      schema:
-        type: string
-    put:
-      summary: Update item in sale
-      tags:
-      - Sales-Items
-      description: Update item in sale
-      parameters: []
-      responses:
-        '200':
-          description: Item in sale updated successfully
-        '400':
-          description: Operation not successful because of missing arguments or broken
-            data
-        '404':
-          description: Sale or item not found
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  default: 3-in-1 toilet luxury
-                selling_price:
-                  type: number
-                  format: decimal
-                  default: 150.21
-                quantity:
-                  type: integer
-                  default: 1
-                category:
-                  type: string
-                  default: Category 2
-              required:
-              - selling_price
-              - item_id
-    delete:
-      summary: Delete item from sale
-      tags:
-      - Sales-Items
-      description: Delete item from sale
-      responses:
-        '200':
-          description: Item deleted successfully
-        '404':
-          description: Sale or item not found
   "/api/v1/users":
     get:
       summary: List of users

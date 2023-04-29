@@ -15,10 +15,10 @@ namespace :api do
     # resources :sales, only: [:index, :create, :destroy, :show, :update]
     resources :sales, only: [:index, :create, :destroy, :show, :update] do
       member do
-        post 'items', to: 'sales#add_item'
-        get 'items', to: 'sales#sale_items_data'
-        put 'items/:item_id', to: 'sales#update_item'
-        delete 'items/:item_id', to: 'sales#delete_item'
+        post 'items', to: 'items_sales#add_item'
+        get 'items', to: 'items_sales#sale_items_data'
+        put 'items/:item_id', to: 'items_sales#update_item'
+        delete 'items/:item_id', to: 'items_sales#delete_item'
       end
     end
     
