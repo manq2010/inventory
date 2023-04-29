@@ -171,5 +171,6 @@ class Api::V1::ItemsSalesController < ApplicationController
   def update_sale_total(sale)
     sale.update(total_price: sale.items.sum(:selling_price))
     sale.update(total_items: sale.items.distinct.count(:item_id))
+
   end
 end
