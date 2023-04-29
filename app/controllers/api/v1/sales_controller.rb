@@ -121,6 +121,8 @@ class Api::V1::SalesController < ApplicationController
     end
 
     if sale.items << item
+      # sale.update(total_price: sale.items.sum(:selling_price))
+      update_sale_total(sale)
       render json: {
         operation: "Item with id: #{item.id} added successfully to sale with id: #{params[:id]}"
       }, status: :ok
@@ -178,6 +180,8 @@ class Api::V1::SalesController < ApplicationController
 
     if sale && item
       sale.items.delete(item)
+      # sale.update(total_price: sale.items.sum(:selling_price))
+      update_sale_total(sale)
       render json: {
         operation: "Item with id #{item.id} has been deleted from sale with id #{sale.id}",
         data: {
@@ -286,5 +290,10 @@ class Api::V1::SalesController < ApplicationController
 
   def item_params
     params.require(:item).permit(:name, :buying_price, :selling_price, :quantity, :category, :sale_id)
+  end
+
+  def update_sale_total(sale)
+    sale.update(total_price: sale.items.sum(:selling_price))
+    sale.update(total_items: sale.items.distinct.count(:item_id))
   end
 end

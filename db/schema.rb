@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_222631) do
   create_table "sales", force: :cascade do |t|
     t.string "name"
     t.decimal "total_price", default: "0.0"
+    t.decimal "total_items", default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
