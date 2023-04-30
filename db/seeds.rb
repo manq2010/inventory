@@ -59,18 +59,21 @@ sale_1.items << item_1
 sale_1.items << item_2
 item_sale_1 = ItemsSale.find_by(sale_id: sale_1.id, item_id: item_1.id)
 item_sale_1.update(quantity: 5, price: item_1.selling_price)
+item_sale_2 = ItemsSale.find_by(sale_id: sale_1.id, item_id: item_2.id)
+item_sale_2.update(quantity: 1, price: item_2.selling_price)
 update_sale_total(sale_1)
 
 # Add 1 Item to Sales 2
 sale_2.items << item_3
-item_sale_2 = ItemsSale.find_by(sale_id: sale_2.id, item_id: item_3.id)
-item_sale_2.update(quantity: 7, price: item_3.selling_price)
+item_sale_3 = ItemsSale.find_by(sale_id: sale_2.id, item_id: item_3.id)
+item_sale_3.update(quantity: 7, price: item_3.selling_price)
 update_sale_total(sale_2)
 
 # Add 2 Items to Sales 3
 sale_3.items << item_1
-item_sale_3 = ItemsSale.find_by(sale_id: sale_3.id, item_id: item_1.id)
-item_sale_3.update(quantity: 10, price: item_3.selling_price)
-
 sale_3.items << item_2
+item_sale_4 = ItemsSale.find_by(sale_id: sale_3.id, item_id: item_1.id)
+item_sale_4.update(quantity: 10, price: item_1.selling_price)
+item_sale_5 = ItemsSale.find_by(sale_id: sale_3.id, item_id: item_2.id)
+item_sale_5.update(quantity: 1, price: item_2.selling_price)
 update_sale_total(sale_3)

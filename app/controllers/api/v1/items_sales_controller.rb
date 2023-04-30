@@ -166,7 +166,5 @@ class Api::V1::ItemsSalesController < ApplicationController
       total_units: ItemsSale.where(sale_id: sale.id).sum('quantity'),
       total_items: sale.items.distinct.count(:item_id)
     )
-    # sale.update(total_units: ItemsSale.where(sale_id: sale.id).sum('quantity'))
-    # sale.update(total_items: sale.items.distinct.count(:item_id))
   end
 end
