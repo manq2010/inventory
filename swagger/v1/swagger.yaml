@@ -308,18 +308,13 @@ paths:
               properties:
                 name:
                   type: string
-                  default: toilets to company x
-                total_price:
-                  type: decimal
-                  default: 0
+                  default: Chillers on Wheels
                 user_id:
                   type: number
                   default: '1'
               required:
               - name
-              - total_price
               - user_id
-              - items
   "/api/v1/sales/{id}":
     parameters:
     - name: id
@@ -355,10 +350,7 @@ paths:
               properties:
                 name:
                   type: string
-                  default: toilets to company x
-                total_price:
-                  type: decimal
-                  default: 0
+                  default: Chillers on Wheels
                 user_id:
                   type: number
                   default: '1'

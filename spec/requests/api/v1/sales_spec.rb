@@ -2,8 +2,7 @@ require 'swagger_helper'
 
 RSpec.describe 'api/v1/sales', type: :request do
   sale_properties = {
-    name: { type: :string, default: 'toilets to company x' },
-    total_price: { type: :decimal, default: 0 },
+    name: { type: :string, default: 'Chillers on Wheels' },
     user_id: { type: :number, default: '1' }
   }
 
@@ -25,7 +24,7 @@ RSpec.describe 'api/v1/sales', type: :request do
         parameter name: :sale, in: :body, schema: {
           type: :object,
           properties: sale_properties,
-          required: %w[name total_price user_id items]
+          required: %w[name user_id]
         }
         run_test!
       end

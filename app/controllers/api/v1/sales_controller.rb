@@ -99,6 +99,6 @@ class Api::V1::SalesController < ApplicationController
   private
 
   def sale_params
-    params.require(:sale).permit(:name, :total_price, :user_id)
+    params.require(:sale).permit(:name, :user_id)
   end
 end
