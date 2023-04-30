@@ -14,7 +14,6 @@ RSpec.describe 'api/v1/items_sales', type: :request do
         properties: {
           item_id: { type: :number, default: '1' }
         },
-        # required: %w[name selling_price quantity]
         required: %w[item_id]
       }
       response(200, 'Created item and added to sale successfully') do
@@ -53,10 +52,7 @@ RSpec.describe 'api/v1/items_sales', type: :request do
       parameter name: :item, in: :body, schema: {
         type: :object,
         properties: {
-          name: { type: :string, default: '3-in-1 toilet luxury' },
-          selling_price: { type: :number, format: :decimal, default: 150.21 },
-          quantity: { type: :integer, default: 1 },
-          category: { type: :string, default: 'Category 2' }
+          quantity: { type: :integer, default: 1 }
         },
         required: %w[selling_price item_id]
       }
@@ -78,7 +74,14 @@ RSpec.describe 'api/v1/items_sales', type: :request do
       response(200, 'Item deleted successfully') do
         run_test!
       end
-      response(404, 'Sale or item not found') do
+      response '404', 'Sale or item not found' do
+        schema type: :object,
+        properties: {
+          id: { type: :number, default: 1000 },
+          item_id: { type: :number, default: 1000 },
+          },
+          required:  %w[id item_id]
+          
         run_test!
       end
     end

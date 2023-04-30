@@ -81,19 +81,9 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                  default: 3-in-1 toilet luxury
-                selling_price:
-                  type: number
-                  format: decimal
-                  default: 150.21
                 quantity:
                   type: integer
                   default: 1
-                category:
-                  type: string
-                  default: Category 2
               required:
               - selling_price
               - item_id
@@ -107,6 +97,20 @@ paths:
           description: Item deleted successfully
         '404':
           description: Sale or item not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    default: 1000
+                  item_id:
+                    type: number
+                    default: 1000
+                required:
+                - id
+                - item_id
   "/api/v1/items":
     get:
       summary: List of items

@@ -26,7 +26,11 @@ class Api::V1::ItemsSalesController < ApplicationController
     end
 
     if sale.items << item
-      # sale.update(total_price: sale.items.sum(:selling_price))
+      # Set the quantity and price in the join table
+
+      item_sale = ItemsSale.find_by(item_id: item.id, sale_id: sale.id)
+      item_sale.update(quantity: 1, price: item.selling_price)
+
       update_sale_total(sale)
       render json: {
         operation: "Item with id: #{item.id} added successfully to sale with id: #{params[:id]}"
@@ -41,33 +45,36 @@ class Api::V1::ItemsSalesController < ApplicationController
   end
 
   # api/v1/sales/:id/items/:item_id
+
   def update_item
-    item = Item.find_by(id: params[:item_id])
     sale = Sale.find_by(id: params[:id])
+    item = Item.find_by(id: params[:item_id])
 
-    if item.nil?
+    if sale.nil? || item.nil?
       render json: {
         data: {
-          errors: "Couldn't find an item with id: #{params[:item_id]}"
+          errors: "Couldn't find a sale with id: #{params[:id]}" + " and/or item with id: #{params[:item_id]}"
         }
-      }, status: :bad_request
+      }, status: :not_found
       return
     end
 
-    sale_item = sale.items.find(item.id)
-
-    if sale_item.nil?
+    item_sale = ItemsSale.find_by(item_id: item.id, sale_id: sale.id)
+    if item_sale.nil?
       render json: {
         data: {
-          errors: "Item with id: #{item.id} is not associated with sale with id: #{params[:id]}"
+          errors: "Item with id: #{item.id} is not present in the sale with id: #{sale.id}"
         }
-      }, status: :bad_request
+      }, status: :not_found
       return
     end
 
-    if sale_item.update(item_quantity: params[:item_quantity])
+    if item_sale.update(item_sale_params)
+      update_sale_total(sale)
       render json: {
-        operation: "Quantity of Item with id: #{item.id} in sale with id: #{params[:id]} updated successfully"
+        data: {
+          message: "Quantity of Item with id: #{item.id} in sale with id: #{params[:id]} updated successfully"
+        }
       }, status: :ok
     else
       render json: {
@@ -85,7 +92,6 @@ class Api::V1::ItemsSalesController < ApplicationController
 
     if sale && item
       sale.items.delete(item)
-      # sale.update(total_price: sale.items.sum(:selling_price))
       update_sale_total(sale)
       render json: {
         operation: "Item with id #{item.id} has been deleted from sale with id #{sale.id}",
@@ -120,21 +126,6 @@ class Api::V1::ItemsSalesController < ApplicationController
       return
     end
 
-    # items_data = sale.items.map do |item|
-    #   {
-    #     id: item.id,
-    #     name: item.name,
-    #     selling_price: item.selling_price,
-    #     item_quantity: item.item_quantity,
-    #     category: item.category
-    #   }
-    # end
-
-    #     sale = Sale.find(1)
-    # items_sale = sale.items_sales.first
-    # item = items_sale.item
-    # quantity = items_sale.quantity
-
     items_data = sale.items.map do |item|
       item_sale = ItemsSale.find_by(item_id: item.id, sale_id: sale.id)
       {
@@ -143,6 +134,7 @@ class Api::V1::ItemsSalesController < ApplicationController
         selling_price: item.selling_price,
         item_quantity: item.item_quantity,
         quantity: item_sale.quantity,
+        price: item_sale.price,
         category: item.category
       }
     end
@@ -157,7 +149,7 @@ class Api::V1::ItemsSalesController < ApplicationController
   private
 
   def sale_params
-    params.require(:sale).permit(:name, :total_price, :user_id)
+    params.require(:sale).permit(:name, :total_price, :total_units, :user_id)
   end
 
   def item_params
@@ -165,12 +157,16 @@ class Api::V1::ItemsSalesController < ApplicationController
   end
 
   def item_sale_params
-    params.require(:item_sale).permit(:item_id, :sale_id, :quantity)
+    params.require(:items_sale).permit(:item_id, :sale_id, :quantity, :price)
   end
 
   def update_sale_total(sale)
-    sale.update(total_price: sale.items.sum(:selling_price))
-    sale.update(total_items: sale.items.distinct.count(:item_id))
-
+    sale.update(
+      total_price: ItemsSale.where(sale_id: sale.id).sum('quantity*price'),
+      total_units: ItemsSale.where(sale_id: sale.id).sum('quantity'),
+      total_items: sale.items.distinct.count(:item_id)
+    )
+    # sale.update(total_units: ItemsSale.where(sale_id: sale.id).sum('quantity'))
+    # sale.update(total_items: sale.items.distinct.count(:item_id))
   end
 end
