@@ -4,6 +4,107 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/customers":
+    get:
+      summary: List of customers
+      tags:
+      - Customers
+      responses:
+        '200':
+          description: Successful
+    post:
+      summary: Create a customer
+      tags:
+      - Customers
+      parameters: []
+      responses:
+        '201':
+          description: Created customer successfully
+        '400':
+          description: Operation not successful due to missing arguments or invalid
+            data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Chillers Wheels
+                email:
+                  type: string
+                  default: chillers@wheels.com
+                country_code:
+                  type: string
+                  default: South Africa
+                address:
+                  type: string
+                  default: 123 Main St, Limpopo
+              required:
+              - name
+              - email
+              - country_code
+              - address
+  "/api/v1/customers/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: Customer ID
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show a customer
+      tags:
+      - Customers
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Customer not found
+    put:
+      summary: Update a customer
+      tags:
+      - Customers
+      parameters: []
+      responses:
+        '200':
+          description: Successful
+        '404':
+          description: Customer not found
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Chillers Wheels
+                email:
+                  type: string
+                  default: chillers@wheels.com
+                country_code:
+                  type: string
+                  default: South Africa
+                address:
+                  type: string
+                  default: 123 Main St, Limpopo
+              required:
+              - name
+              - email
+              - country_code
+              - address
+    delete:
+      summary: Delete a customer
+      tags:
+      - Customers
+      responses:
+        '200':
+          description: Successful
+        '404':
+          description: Customer not found
   "/api/v1/sales/{id}/items":
     parameters:
     - name: id
@@ -481,10 +582,12 @@ tags:
   description: Operations related to Orders
 - name: Sales-Items
   description: Operations related to Sales - Items join table
+- name: Customers
+  description: Operations related to Customers
 security:
 - bearerAuth: []
 servers:
 - url: http://{defaultHost}
   variables:
     defaultHost:
-      default: localhost:3000
+      default: 127.0.0.1:3000

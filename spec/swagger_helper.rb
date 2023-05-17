@@ -12,7 +12,8 @@ all_tags = [
   { name: 'Items', description: 'Operations related to items' },
   { name: 'Sales', description: 'Operations related to Sales' },
   { name: 'Orders', description: 'Operations related to Orders' },
-  { name: 'Sales-Items', description: 'Operations related to Sales - Items join table' }
+  { name: 'Sales-Items', description: 'Operations related to Sales - Items join table' },
+  { name: 'Customers', description: 'Operations related to Customers' }
 ]
 
 RSpec.configure do |config|
@@ -45,7 +46,7 @@ RSpec.configure do |config|
           url: 'http://{defaultHost}',
           variables: {
             defaultHost: {
-              default: 'localhost:3000'
+              default: '127.0.0.1:3000'
             }
           }
         }

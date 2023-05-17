@@ -12,7 +12,7 @@ namespace :api do
   namespace :v1 do
     resources :items, only: [:index, :create, :destroy, :show, :update]
     resources :users, only: [:index, :show, :update, :destroy]
-    # resources :sales, only: [:index, :create, :destroy, :show, :update]
+    resources :customers, only: [:index, :create, :destroy, :show, :update]
     resources :sales, only: [:index, :create, :destroy, :show, :update] do
       member do
         post 'items', to: 'items_sales#add_item'
