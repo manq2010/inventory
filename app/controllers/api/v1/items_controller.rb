@@ -20,7 +20,7 @@ class Api::V1::ItemsController < ApplicationController
     if item
       render json: {
         data: {
-          items: item
+          item: item
         }
       }, status: :ok
     else
