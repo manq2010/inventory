@@ -1,5 +1,5 @@
 class Api::V1::ItemsController < ApplicationController
-  skip_before_action :authenticate
+  # skip_before_action :authenticate
 
   # api/v1/items
   def index

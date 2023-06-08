@@ -1,5 +1,5 @@
 class Api::V1::CustomersController < ApplicationController
-    skip_before_action :authenticate
+    # skip_before_action :authenticate
   
     def index
       customers = Customer.all

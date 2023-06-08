@@ -1,6 +1,6 @@
 class Api::V1::SalesController < ApplicationController
   # before_action :set_sale, only: %i[show destroy]
-  skip_before_action :authenticate
+  # skip_before_action :authenticate
   # before_action :current_user
 
   def index

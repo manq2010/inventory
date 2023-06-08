@@ -1,5 +1,5 @@
 class Api::V1::ItemsSalesController < ApplicationController
-  skip_before_action :authenticate
+  # skip_before_action :authenticate
   #   before_action :set_sale, only: %i[add_item update_item delete_item sale_items_data]
 
   # api/v1/sales/:id/items/

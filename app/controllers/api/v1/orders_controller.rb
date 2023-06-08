@@ -1,6 +1,6 @@
 class Api::V1::OrdersController < ApplicationController
   before_action :set_order, only: %i[show change_status destroy]
-  skip_before_action :authenticate
+  # skip_before_action :authenticate
 
   def index
     # @orders = Order.all
