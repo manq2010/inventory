@@ -492,11 +492,27 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                first_name:
                   type: string
-                  default: test
+                  default: Scott
+                last_name:
+                  type: string
+                  default: Blue
+                email:
+                  type: string
+                  default: tester@inventory.com
+                phone:
+                  type: string
+                  default: '1234509876'
+                role:
+                  type: string
+                  default: tester
               required:
-              - name
+              - first_name
+              - last_name
+              - email
+              - phone
+              - role
   "/api/v1/users/{id}":
     parameters:
     - name: id
@@ -528,11 +544,27 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                first_name:
                   type: string
-                  default: test
+                  default: Scott
+                last_name:
+                  type: string
+                  default: Blue
+                email:
+                  type: string
+                  default: tester@inventory.com
+                phone:
+                  type: string
+                  default: '1234509876'
+                role:
+                  type: string
+                  default: tester
               required:
-              - name
+              - first_name
+              - last_name
+              - email
+              - phone
+              - role
     delete:
       summary: delete user
       tags:
@@ -559,12 +591,11 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                email:
                   type: string
-                  default: test
+                  default: developer@inventory.com
               required:
               - email
-              - password
 components:
   securitySchemes:
     bearerAuth:

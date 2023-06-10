@@ -9,14 +9,14 @@ RSpec.describe 'api/v1/customers', type: :request do
   }
 
   path '/api/v1/customers' do
-    get('List of customers') do
+    get('Retrieves a list of customers') do
       tags 'Customers'
       response(200, 'Successful') do
         run_test!
       end
     end
 
-    post('Create a customer') do
+    post('Creates a customer') do
       tags 'Customers'
       response(201, 'Created customer successfully') do
         consumes 'application/json'
@@ -38,7 +38,7 @@ RSpec.describe 'api/v1/customers', type: :request do
   path '/api/v1/customers/{id}' do
     parameter name: 'id', in: :path, type: :string, description: 'Customer ID'
 
-    get('Show a customer') do
+    get('Retrieves a single customer') do
       tags 'Customers'
       response(200, 'Successful') do
         let(:id) { '123' }
@@ -50,7 +50,7 @@ RSpec.describe 'api/v1/customers', type: :request do
       end
     end
 
-    put('Update a customer') do
+    put('Updates a customer') do
       tags 'Customers'
       response(200, 'Successful') do
         let(:id) { '123' }
@@ -69,7 +69,7 @@ RSpec.describe 'api/v1/customers', type: :request do
       end
     end
 
-    delete('Delete a customer') do
+    delete('Deletes a customer') do
       tags 'Customers'
       response(200, 'Successful') do
         let(:id) { '123' }

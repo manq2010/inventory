@@ -2,11 +2,11 @@ require 'swagger_helper'
 
 RSpec.describe 'api/v1/users', type: :request do
   user_properties = {
-    name: { type: :string, default: 'test' }
-    # email: { type: :string, default: 'test@test.com' },
-    # username: { type: :string, default: 'tester' },
-    # password: { type: :string, default: 'test@123' },
-    # role: { type: :string, default: 'admin' }
+    first_name: { type: :string, default: 'Scott' },
+    last_name: { type: :string, default: 'Blue' },
+    email: { type: :string, default: 'tester@inventory.com' },
+    phone: { type: :string, default: '1234509876' },
+    role: { type: :string, default: 'tester' }
   }
 
   path '/api/v1/users' do
@@ -34,7 +34,7 @@ RSpec.describe 'api/v1/users', type: :request do
         parameter name: :user, in: :body, schema: {
           type: :object,
           properties: user_properties,
-          required: %w[name]
+          required: %w[first_name last_name email phone role]
         }
         run_test!
       end
@@ -77,7 +77,7 @@ RSpec.describe 'api/v1/users', type: :request do
           parameter name: :user, in: :body, schema: {
             type: :object,
             properties: user_properties,
-            required: %w[name]
+            required: %w[first_name last_name email phone role]
           }
           run_test!
         end

@@ -1,6 +1,6 @@
 class CreateSales < ActiveRecord::Migration[7.0]
   def change
-    create_table :sales do |t|
+    create_table :sales, id: :uuid do |t|
       t.string :name
       t.decimal :total_price, default: 0
       t.integer :total_items, default: 0
