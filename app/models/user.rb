@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  
+  extend FriendlyId
   validates :email, presence: true, 
   format: {with: URI::MailTo::EMAIL_REGEXP},
   length: {maximum: 105},
@@ -17,4 +17,20 @@ class User < ApplicationRecord
 
   has_many :sales, foreign_key: 'user_id', dependent: :destroy, inverse_of: :user
   has_many :orders, foreign_key: 'user_id', dependent: :destroy, inverse_of: :user
+
+  # friendly_id :first_name, :use => :slugged
+
+  friendly_id :slug_candidates, use: :slugged
+
+  def slug_candidates
+    [
+      :first_name,
+      [:first_name, :last_name],
+      [:first_name, :last_name, :email]
+    ]
+  end
+
+  def to_param
+    slug
+  end
 end

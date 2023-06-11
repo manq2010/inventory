@@ -63,3 +63,5 @@ group :development, :test do
 end
 
 gem 'bullet', group: 'development'
+
+gem 'friendly_id'

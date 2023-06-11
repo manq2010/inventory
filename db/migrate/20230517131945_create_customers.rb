@@ -21,8 +21,11 @@ class CreateCustomers < ActiveRecord::Migration[7.0]
       t.string :last_order_name
       t.integer :orders_count, default: 0
       t.decimal :total_spent, default: 0
+      t.string :slug, :null => false
 
       t.timestamps
     end
+
+    add_index :customers, :slug, unique: true
   end
 end

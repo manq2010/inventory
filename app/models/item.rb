@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
+  extend FriendlyId
   has_many :images, dependent: :destroy
   has_and_belongs_to_many :sales, through: :items_sales
 

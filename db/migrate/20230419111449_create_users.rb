@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :email, null: false, default: ""
       t.string :phone
       t.string :role
+      t.string :slug, :null => false
       # t.string :username
       # t.string :password
 
@@ -13,5 +14,6 @@ class CreateUsers < ActiveRecord::Migration[7.0]
     end
 
     add_index :users, :email, unique: true
+    add_index :users, :slug, unique: true
   end
 end
