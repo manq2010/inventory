@@ -12,6 +12,14 @@ RSpec.describe 'api/v1/customers', type: :request do
     get('Retrieves a list of customers') do
       tags 'Customers'
       response(200, 'Successful') do
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
     end
@@ -26,10 +34,26 @@ RSpec.describe 'api/v1/customers', type: :request do
           properties: customer_properties,
           required: %w[name email country_code address]
         }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
 
       response(400, 'Operation not successful due to missing arguments or invalid data') do
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
     end
@@ -46,6 +70,14 @@ RSpec.describe 'api/v1/customers', type: :request do
       end
 
       response(400, 'Customer not found') do
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
     end
@@ -61,10 +93,26 @@ RSpec.describe 'api/v1/customers', type: :request do
           properties: customer_properties,
           required: %w[name email country_code address]
         }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
 
       response(404, 'Customer not found') do
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
     end
@@ -73,10 +121,26 @@ RSpec.describe 'api/v1/customers', type: :request do
       tags 'Customers'
       response(200, 'Successful') do
         let(:id) { '123' }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
 
       response(404, 'Customer not found') do
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
     end

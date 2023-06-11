@@ -6,14 +6,14 @@ info:
 paths:
   "/api/v1/customers":
     get:
-      summary: List of customers
+      summary: Retrieves a list of customers
       tags:
       - Customers
       responses:
         '200':
           description: Successful
     post:
-      summary: Create a customer
+      summary: Creates a customer
       tags:
       - Customers
       parameters: []
@@ -55,7 +55,7 @@ paths:
       schema:
         type: string
     get:
-      summary: Show a customer
+      summary: Retrieves a single customer
       tags:
       - Customers
       responses:
@@ -64,7 +64,7 @@ paths:
         '400':
           description: Customer not found
     put:
-      summary: Update a customer
+      summary: Updates a customer
       tags:
       - Customers
       parameters: []
@@ -97,7 +97,7 @@ paths:
               - country_code
               - address
     delete:
-      summary: Delete a customer
+      summary: Deletes a customer
       tags:
       - Customers
       responses:

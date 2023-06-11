@@ -36,6 +36,14 @@ RSpec.describe 'api/v1/users', type: :request do
           properties: user_properties,
           required: %w[first_name last_name email phone role]
         }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
 
@@ -79,6 +87,14 @@ RSpec.describe 'api/v1/users', type: :request do
             properties: user_properties,
             required: %w[first_name last_name email phone role]
           }
+
+          after do |example|
+            example.metadata[:response][:content] = {
+              'application/json' => {
+                example: JSON.parse(response.body, symbolize_names: true)
+              }
+            }
+          end
           run_test!
         end
       end

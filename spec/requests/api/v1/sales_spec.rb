@@ -63,6 +63,14 @@ RSpec.describe 'api/v1/sales', type: :request do
             properties: sale_properties,
             required: %w[name total_price]
           }
+
+          after do |example|
+            example.metadata[:response][:content] = {
+              'application/json' => {
+                example: JSON.parse(response.body, symbolize_names: true)
+              }
+            }
+          end
           run_test!
         end
 
@@ -76,10 +84,26 @@ RSpec.describe 'api/v1/sales', type: :request do
       tags 'Sales'
       response(200, 'successful') do
         let(:id) { '123' }
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
 
       response(404, 'Sale not found') do
+
+        after do |example|
+          example.metadata[:response][:content] = {
+            'application/json' => {
+              example: JSON.parse(response.body, symbolize_names: true)
+            }
+          }
+        end
         run_test!
       end
     end
