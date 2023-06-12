@@ -16,7 +16,7 @@ class Api::V1::ItemsController < ApplicationController
   # api/v1/items/{id}
   def show
     # render json: @item
-    item = Item.find_by(id: params[:id]).as_json(include: :images)
+    item = Item.friendly.find(params[:id]).as_json(include: :images)
     if item
       render json: {
         data: {
@@ -62,7 +62,7 @@ class Api::V1::ItemsController < ApplicationController
 
   # api/v1/items/{id}
   def update
-    item = Item.find(params[:id])
+    item = Item.friendly.find(params[:id])
 
     if item.update(item_params)
       # Update associated images
@@ -90,7 +90,7 @@ class Api::V1::ItemsController < ApplicationController
 
   # api/v1/items/{id}
   def destroy
-    item = Item.find_by(id: params[:id])
+    item = Item.friendly.find(params[:id])
 
     if item&.destroy
       render json: { operation: "Item deleted with id #{item.id}" }, status: :accepted
@@ -109,6 +109,20 @@ class Api::V1::ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :buying_price, :selling_price, :item_quantity, :category, :images)
+    params.require(:item)
+    .permit(
+      :title, 
+      :description, 
+      :price, 
+      :available, 
+      :quantity, 
+      :images,
+      :category,
+      :sku,
+      :tag,
+      :weight,
+      :size,
+      :color
+      )
   end
 end

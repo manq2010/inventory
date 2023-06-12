@@ -54,20 +54,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_175417) do
 
   create_table "images", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "url"
-    t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "item_id", null: false
     t.index ["item_id"], name: "index_images_on_item_id"
-    t.index ["slug"], name: "index_images_on_slug", unique: true
   end
 
   create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.decimal "buying_price"
-    t.decimal "selling_price"
-    t.integer "item_quantity"
-    t.string "category"
+    t.string "title"
+    t.string "description"
+    t.decimal "price", null: false
+    t.boolean "available", default: true, null: false
+    t.integer "quantity", default: 1, null: false
+    t.string "category", default: "", null: false
+    t.string "sku", default: "", null: false
+    t.string "tag", default: "", null: false
+    t.integer "weight", null: false
+    t.string "size", default: "", null: false
+    t.string "color", default: "", null: false
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

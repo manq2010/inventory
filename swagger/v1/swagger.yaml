@@ -238,21 +238,40 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                title:
                   type: string
                   default: 4-in-1 toilet
-                buying_price:
+                description:
+                  type: string
+                  default: "Maximum ventilation (6 vents). Ventilation pipe\n    Roomy
+                    interior. Anti-slip floor surface. Occupancy signal latch. Double
+                    toilet roll holder. \n    White roof for enhanced natural light.
+                    Carry handles. Toilet seat and flap.\n    Free-standing basin
+                    with a foot pump. Flushing system"
+                price:
                   type: decimal
-                  default: 150.51
-                selling_price:
-                  type: decimal
-                  default: 170.21
-                item_quantity:
-                  type: number
-                  default: 10
+                  default: 880
+                quantity:
+                  type: integer
+                  default: 5
                 category:
                   type: string
                   default: Toilets
+                sku:
+                  type: string
+                  default: TCW001
+                tag:
+                  type: string
+                  default: Builders Toilet, Portable Toilet
+                color:
+                  type: string
+                  default: Dark Green
+                weight:
+                  type: integer
+                  default: 74
+                size:
+                  type: string
+                  default: 880 × 920 × 1940
                 images:
                   type: array
                   default:
@@ -295,21 +314,40 @@ paths:
             schema:
               type: object
               properties:
-                name:
+                title:
                   type: string
                   default: 4-in-1 toilet
-                buying_price:
+                description:
+                  type: string
+                  default: "Maximum ventilation (6 vents). Ventilation pipe\n    Roomy
+                    interior. Anti-slip floor surface. Occupancy signal latch. Double
+                    toilet roll holder. \n    White roof for enhanced natural light.
+                    Carry handles. Toilet seat and flap.\n    Free-standing basin
+                    with a foot pump. Flushing system"
+                price:
                   type: decimal
-                  default: 150.51
-                selling_price:
-                  type: decimal
-                  default: 170.21
-                item_quantity:
-                  type: number
-                  default: 10
+                  default: 880
+                quantity:
+                  type: integer
+                  default: 5
                 category:
                   type: string
                   default: Toilets
+                sku:
+                  type: string
+                  default: TCW001
+                tag:
+                  type: string
+                  default: Builders Toilet, Portable Toilet
+                color:
+                  type: string
+                  default: Dark Green
+                weight:
+                  type: integer
+                  default: 74
+                size:
+                  type: string
+                  default: 880 × 920 × 1940
                 images:
                   type: array
                   default:

@@ -19,6 +19,7 @@ user = User.find_or_initialize_by(
 )
     unless user.persisted?
         user.update!(role: ADMIN_ROLE)
+        user.reload
     end
     puts "Added/updated admin user."
 end
@@ -40,28 +41,49 @@ user = User.find_or_initialize_by(
 )
     unless user.persisted?
         user.update!(role: OWNER_ROLE)
+        user.reload
     end
     puts "Added/updated owner user."
 end
 
 # Developer user
 # ----------
-DEVELOPER_FIRST_NAME = "James"
-DEVELOPER_LAST_NAME = "Bond"
+DEVELOPER_FIRST_NAME = "Mark"
+DEVELOPER_LAST_NAME = "Dev"
 DEVELOPER_EMAIL = "developer@inventory.com"
 DEVELOPER_PHONE = "0123456789"
 DEVELOPER_ROLE = "developer"
 
 developer_user = lambda do
-user = User.find_or_initialize_by(
-    first_name: DEVELOPER_FIRST_NAME,
-    last_name: DEVELOPER_LAST_NAME,
-    email: DEVELOPER_EMAIL,
-    phone: DEVELOPER_PHONE
-)
+    user = User.find_or_initialize_by(
+        first_name: DEVELOPER_FIRST_NAME,
+        last_name: DEVELOPER_LAST_NAME,
+        email: DEVELOPER_EMAIL,
+        phone: DEVELOPER_PHONE
+    )
     unless user.persisted?
         user.update!(role: DEVELOPER_ROLE)
+        user.reload
     end
+
+    item = Item.find_or_create_by!(
+        title: '4-in-1 toilet',
+        description: 'Maximum ventilation (6 vents). Ventilation pipe. Roomy interior',
+        price: 1200,
+        quantity: 4,
+        category: 'Toilets',
+        sku: 'TCW00012',
+        tag: 'Builders Toilet, Portable Toilet',
+        color: 'Blue',
+        weight: 74,
+        size: '880 × 920 × 1940',
+    )
+    
+    Image.find_or_create_by!(
+        url: "https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/Lato-2160-%C3%97-2160-px-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpg",
+        item: item,
+    )
+    
     puts "Added/updated developer user."
 end
 

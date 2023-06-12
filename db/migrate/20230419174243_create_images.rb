@@ -1,12 +1,13 @@
 class CreateImages < ActiveRecord::Migration[7.0]
-  def change
+  def self.up
     create_table :images, id: :uuid do |t|
       t.string :url
-      t.string :slug, :null => false
       
       t.timestamps
     end
+  end
 
-    add_index :images, :slug, unique: true
+  def self.down
+    drop_table :images
   end
 end

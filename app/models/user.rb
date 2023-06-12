@@ -4,7 +4,9 @@ class User < ApplicationRecord
   format: {with: URI::MailTo::EMAIL_REGEXP},
   length: {maximum: 105},
   uniqueness: { message: 'Must be unique', case_sensitive: false}
-  validates :phone, presence: true, length: { in: 3..250, message: 'Must be a number of at least 3 digits' }
+  validates :phone, presence: true, 
+  length: { in: 3..250, message: 'Must be a number of at least 3 digits' },
+  numericality: { only_integer: true }
   validates :first_name, :last_name, presence: true,
   length: { in: 3..250, message: 'Must be a string of at least 3 characters' }
   # validates :password, presence: true, length: { minimum: 6 }, confirmation: true
