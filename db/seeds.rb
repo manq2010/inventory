@@ -43,6 +43,8 @@ user = User.find_or_initialize_by(
         user.update!(role: OWNER_ROLE)
         user.reload
     end
+
+
     puts "Added/updated owner user."
 end
 
@@ -65,8 +67,11 @@ developer_user = lambda do
         user.update!(role: DEVELOPER_ROLE)
         user.reload
     end
+    puts "Added/updated developer user."
+end
 
-    item = Item.find_or_create_by!(
+items = lambda do
+    item_1 = Item.find_or_create_by!(
         title: '4-in-1 toilet',
         description: 'Maximum ventilation (6 vents). Ventilation pipe. Roomy interior',
         price: 1200,
@@ -76,21 +81,58 @@ developer_user = lambda do
         tag: 'Builders Toilet, Portable Toilet',
         color: 'Blue',
         weight: 74,
-        size: '880 × 920 × 1940',
+        size: '880 × 920 × 1940'
     )
     
     Image.find_or_create_by!(
         url: "https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/Lato-2160-%C3%97-2160-px-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpg",
-        item: item,
+        item: item_1,
+    )
+
+    item_2 = Item.find_or_create_by!(
+        title: 'Mobile Cold Room',
+        description: 'Anti-slip floor surface. Occupancy signal latch. Double toilet roll holder.',
+        price: 1200,
+        quantity: 4,
+        category: 'Fridges',
+        sku: 'TCW00057',
+        tag: 'Portable Fridges',
+        color: 'Green',
+        weight: 90,
+        size: '880 × 920 × 1940'
     )
     
-    puts "Added/updated developer user."
+    Image.find_or_create_by!(
+        url: "https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/Lato-2160-%C3%97-2160-px-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpg",
+        item: item_2,
+    )
+
+    item_3 = Item.find_or_create_by!(
+        title: '2-in-1 toilet',
+        description: 'White roof for enhanced natural light. Carry handles. Toilet seat and flap.',
+        price: 1200,
+        quantity: 4,
+        category: 'Toilets',
+        sku: 'TCW00041',
+        tag: 'Builders Toilet',
+        color: 'Grey',
+        weight: 74,
+        size: '880 × 920 × 1940'
+    )
+    
+    Image.find_or_create_by!(
+        url: "https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/CHILLERS-26-1024x728-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpeg",
+        item: item_3,
+    )
+
+    puts "Added items."
 end
 
 ActiveRecord::Base.transaction do
     admin_user.call
     owner_user.call
     developer_user.call
+    items.call
 end
 
 # Admin user

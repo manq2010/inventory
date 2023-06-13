@@ -122,7 +122,9 @@ class Api::V1::ItemsController < ApplicationController
       :tag,
       :weight,
       :size,
-      :color
+      :color,
+      :created_by,
+      :last_updated_by
       )
   end
 end
