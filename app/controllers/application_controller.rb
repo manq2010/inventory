@@ -15,16 +15,27 @@ class ApplicationController < ActionController::API
   #   end
   # end
 
-  # protect_from_forgery with: :exception
+  # before_action :authenticate_user!
 
   # before_action :update_allowed_parameters, if: :devise_controller?
 
-  # protected
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # def update_allowed_parameters
-  #   devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :password, :phone, :email, :password_confirmation) }
-  #   devise_parameter_sanitizer.permit(:account_update) do |u|
-  #     u.permit(:first_name, :last_name, :password, :phone, :email, :password_confirmation)
-  #   end
-  # end
+  protected
+
+  def configure_permitted_parameters
+    # devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :password, :phone, :email, :password_confirmation) }
+    # devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :password, :email) }
+    # devise_parameter_sanitizer.permit(:account_update) do |u|
+    #   u.permit(:first_name, :last_name, :password, :email)
+    # end
+
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :password, :phone, :email, :password_confirmation ])
+    devise_parameter_sanitizer.permit(:sign_in) do |user_params|
+      user_params.permit(:password, :email)
+    end
+     devise_parameter_sanitizer.permit(:account_update) do |u|
+      u.permit(:first_name, :last_name, :password, :email)
+    end
+  end
 end
