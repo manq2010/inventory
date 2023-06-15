@@ -50,14 +50,14 @@ gem 'rack-cors', '~> 2.0'
 
 gem 'rswag'
 
-gem 'jwt'
+gem 'jwt', '~> 2.7', '>= 2.7.1'
 
 gem 'bcrypt'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'capybara'
-  gem 'dotenv-rails'
+  # gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'rspec-rails'
 end
@@ -65,3 +65,8 @@ end
 gem 'bullet', group: 'development'
 
 gem 'friendly_id'
+
+gem 'dotenv-rails', groups: %i[development test]
+
+gem 'devise', '~> 4.9'
+gem 'devise-jwt'

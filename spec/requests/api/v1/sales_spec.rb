@@ -96,7 +96,6 @@ RSpec.describe 'api/v1/sales', type: :request do
       end
 
       response(404, 'Sale not found') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {

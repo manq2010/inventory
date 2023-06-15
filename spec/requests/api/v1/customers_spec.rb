@@ -12,7 +12,6 @@ RSpec.describe 'api/v1/customers', type: :request do
     get('Retrieves a list of customers') do
       tags 'Customers'
       response(200, 'Successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -46,7 +45,6 @@ RSpec.describe 'api/v1/customers', type: :request do
       end
 
       response(400, 'Operation not successful due to missing arguments or invalid data') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -70,7 +68,6 @@ RSpec.describe 'api/v1/customers', type: :request do
       end
 
       response(400, 'Customer not found') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -105,7 +102,6 @@ RSpec.describe 'api/v1/customers', type: :request do
       end
 
       response(404, 'Customer not found') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -133,7 +129,6 @@ RSpec.describe 'api/v1/customers', type: :request do
       end
 
       response(404, 'Customer not found') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {

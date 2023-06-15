@@ -72,7 +72,6 @@ RSpec.describe 'api/v1/items_sales', type: :request do
       description 'Delete item from sale'
       produces 'application/json'
       response(200, 'Item deleted successfully') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -84,11 +83,11 @@ RSpec.describe 'api/v1/items_sales', type: :request do
       end
       response '404', 'Sale or item not found' do
         schema type: :object,
-        properties: {
-          id: { type: :number, default: 1000 },
-          item_id: { type: :number, default: 1000 },
-          },
-          required:  %w[id item_id]
+               properties: {
+                 id: { type: :number, default: 1000 },
+                 item_id: { type: :number, default: 1000 }
+               },
+               required: %w[id item_id]
 
         after do |example|
           example.metadata[:response][:content] = {

@@ -71,7 +71,7 @@ developer_user = lambda do
 end
 
 items = lambda do
-    item_1 = Item.find_or_create_by!(
+    item_1 = Item.create!(
         title: '4-in-1 toilet',
         description: 'Maximum ventilation (6 vents). Ventilation pipe. Roomy interior',
         price: 1200,
@@ -84,12 +84,12 @@ items = lambda do
         size: '880 × 920 × 1940'
     )
     
-    Image.find_or_create_by!(
+    Image.create!(
         url: "https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/Lato-2160-%C3%97-2160-px-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpg",
         item: item_1,
     )
 
-    item_2 = Item.find_or_create_by!(
+    item_2 = Item.create!(
         title: 'Mobile Cold Room',
         description: 'Anti-slip floor surface. Occupancy signal latch. Double toilet roll holder.',
         price: 1200,
@@ -102,12 +102,12 @@ items = lambda do
         size: '880 × 920 × 1940'
     )
     
-    Image.find_or_create_by!(
+    Image.create!(
         url: "https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/Lato-2160-%C3%97-2160-px-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpg",
         item: item_2,
     )
 
-    item_3 = Item.find_or_create_by!(
+    item_3 = Item.create!(
         title: '2-in-1 toilet',
         description: 'White roof for enhanced natural light. Carry handles. Toilet seat and flap.',
         price: 1200,
@@ -120,7 +120,7 @@ items = lambda do
         size: '880 × 920 × 1940'
     )
     
-    Image.find_or_create_by!(
+    Image.create!(
         url: "https://chillersonwheels.co.za/wp-content/uploads/elementor/thumbs/CHILLERS-26-1024x728-1-q1kvizfrdbuc8fb5uqy8g7ctdcji97y4z81i4nl3b0.jpeg",
         item: item_3,
     )
@@ -132,8 +132,45 @@ ActiveRecord::Base.transaction do
     admin_user.call
     owner_user.call
     developer_user.call
-    items.call
+    50.times { items.call }
 end
+
+# unless Assessor.exists?
+#     assessor_args = {
+#       email: "assessor@example.com",
+#       password: "^#ur9EkLm@1W",
+#       first_name: "First name",
+#       last_name: "Last name",
+#       confirmed_at: DateTime.now
+#     }
+  
+#     Assessor.create!(assessor_args)
+#     p "========Assessor created========"
+#   end
+  
+#   roles = ["lead", "regular", "none"]
+#   awards = ["trade", "innovation", "development", "promotion", "mobility"]
+  
+#   awards.each do |award|
+#     roles.each do |role|
+#       assessor_args = {
+#         email: "#{role}-assessor-#{award}@example.com",
+#         first_name: "#{role}-assessor",
+#         last_name: "#{award}",
+#       }
+#       role_args = {
+#         "#{award}_role" => (role == "none" ? nil : role)
+#       }
+  
+#       assessor_args.merge!(role_args)
+  
+#       a = Assessor.where(assessor_args).first_or_initialize
+#       a.password = "^#ur9EkLm@1W"
+#       a.confirmed_at ||= DateTime.now
+#       a.save!
+#     end
+#   end
+#   p "========Other assessors created========"
 
 # Admin user
 # ----------
@@ -311,3 +348,8 @@ end
 # item_sale_5.update(quantity: 1, price: item_2.selling_price)
 # update_sale_total(sale_3)
 
+
+
+
+
+  

@@ -1,34 +1,21 @@
 class User < ApplicationRecord
+  include Devise::JWT::RevocationStrategies::JTIMatcher
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :jwt_authenticatable,
+         jwt_revocation_strategy: self
+
   extend FriendlyId
-  validates :email, presence: true, 
-  format: {with: URI::MailTo::EMAIL_REGEXP},
-  length: {maximum: 105},
-  uniqueness: { message: 'Must be unique', case_sensitive: false}
-  validates :phone, presence: true, 
-  length: { in: 3..250, message: 'Must be a number of at least 3 digits' },
-  numericality: { only_integer: true }
-  validates :first_name, :last_name, presence: true,
-  length: { in: 3..250, message: 'Must be a string of at least 3 characters' }
-  # validates :password, presence: true, length: { minimum: 6 }, confirmation: true
-  # validates :password_confirmation, presence: true
-  # validates :username, presence: true, uniqueness: { message: 'Must be unique' },
-  #  length: { in: 3..250, message: 'Must be a string of at least 3 characters' }
-  
-  # has_many :sales, foreign_key: 'user_id', dependent: :destroy, inverse_of: :user
-  # has_many :orders, foreign_key: 'user_id', dependent: :destroy, inverse_of: :user
-
-  has_many :sales, foreign_key: 'user_id', dependent: :destroy, inverse_of: :user
-  has_many :orders, foreign_key: 'user_id', dependent: :destroy, inverse_of: :user
-
-  # friendly_id :first_name, :use => :slugged
 
   friendly_id :slug_candidates, use: :slugged
 
   def slug_candidates
     [
       :first_name,
-      [:first_name, :last_name],
-      [:first_name, :last_name, :email]
+      %i[first_name last_name],
+      %i[first_name last_name email]
     ]
   end
 

@@ -110,21 +110,21 @@ class Api::V1::ItemsController < ApplicationController
 
   def item_params
     params.require(:item)
-    .permit(
-      :title, 
-      :description, 
-      :price, 
-      :available, 
-      :quantity, 
-      :images,
-      :category,
-      :sku,
-      :tag,
-      :weight,
-      :size,
-      :color,
-      :created_by,
-      :last_updated_by
+      .permit(
+        :title,
+        :description,
+        :price,
+        :available,
+        :quantity,
+        :images,
+        :category,
+        :sku,
+        :tag,
+        :weight,
+        :size,
+        :color,
+        :created_by,
+        :last_updated_by
       )
   end
 end

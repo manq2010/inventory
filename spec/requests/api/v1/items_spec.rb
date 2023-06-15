@@ -4,7 +4,7 @@ RSpec.describe 'api/v1/items', type: :request do
   item_properties = {
     title: { type: :string, default: '4-in-1 toilet' },
     description: { type: :string, default: 'Maximum ventilation (6 vents). Ventilation pipe
-    Roomy interior. Anti-slip floor surface. Occupancy signal latch. Double toilet roll holder. 
+    Roomy interior. Anti-slip floor surface. Occupancy signal latch. Double toilet roll holder.
     White roof for enhanced natural light. Carry handles. Toilet seat and flap.
     Free-standing basin with a foot pump. Flushing system' },
     price: { type: :decimal, default: 880 },
@@ -27,7 +27,6 @@ RSpec.describe 'api/v1/items', type: :request do
       parameter name: :items,
                 in: :body
       response(200, 'successful') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -61,7 +60,6 @@ RSpec.describe 'api/v1/items', type: :request do
       end
 
       response(400, 'Operation not successful because of missing arguments or broken data') do
-        
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -93,7 +91,6 @@ RSpec.describe 'api/v1/items', type: :request do
       end
 
       response(400, 'Car not found') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -146,7 +143,6 @@ RSpec.describe 'api/v1/items', type: :request do
       end
 
       response(404, 'Item not found') do
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
