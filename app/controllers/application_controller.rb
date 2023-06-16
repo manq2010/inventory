@@ -24,18 +24,21 @@ class ApplicationController < ActionController::API
   protected
 
   def configure_permitted_parameters
-    # devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :password, :phone, :email, :password_confirmation) }
-    # devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :password, :email) }
+    devise_parameter_sanitizer.permit(:sign_up) do |u|
+      u.permit(:first_name, :last_name, :password, :phone, :email, :password_confirmation)
+    end
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:first_name, :last_name, :password, :email) }
+    devise_parameter_sanitizer.permit(:account_update) do |u|
+      u.permit(:first_name, :last_name, :password, :email)
+    end
+
+    # devise_parameter_sanitizer.permit(:sign_up,
+    #                                   keys: %i[first_name last_name password phone email password_confirmation])
+    # devise_parameter_sanitizer.permit(:sign_in) do |user_params|
+    #   user_params.permit(:password, :email)
+    # end
     # devise_parameter_sanitizer.permit(:account_update) do |u|
     #   u.permit(:first_name, :last_name, :password, :email)
     # end
-
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :password, :phone, :email, :password_confirmation ])
-    devise_parameter_sanitizer.permit(:sign_in) do |user_params|
-      user_params.permit(:password, :email)
-    end
-     devise_parameter_sanitizer.permit(:account_update) do |u|
-      u.permit(:first_name, :last_name, :password, :email)
-    end
   end
 end
