@@ -22,8 +22,7 @@ class Users::SessionsController < Devise::SessionsController
   def log_in_success
     render json: {
       status: { code: 200, message: 'Logged in sucessfully' },
-      # data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
-      user: resource
+      data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
     }, status: :ok
   end
 
