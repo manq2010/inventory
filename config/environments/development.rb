@@ -69,7 +69,7 @@ Rails.application.configure do
     Bullet.raise = true
   end
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 4000 }
 
   config.navigational_formats = []
 end
