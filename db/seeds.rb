@@ -135,6 +135,18 @@ ActiveRecord::Base.transaction do
     50.times { items.call }
 end
 
+# employee = (1..50).map do
+#     Employee.create!(
+#       name: "employee",
+#       email: "emp@gmail.com",
+#       dob: "17-01-1988",
+#       mobile: "8879544321",
+#       designation: "Senior Developer",
+#       salary: 35_000,
+#       manager: managers.sample
+#     )
+#   end
+
 # unless Assessor.exists?
 #     assessor_args = {
 #       email: "assessor@example.com",

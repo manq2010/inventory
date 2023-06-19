@@ -71,3 +71,8 @@ gem 'dotenv-rails', groups: %i[development test]
 gem 'devise', '~> 4.9'
 gem 'devise-jwt'
 gem 'jsonapi-serializer'
+
+gem 'cancancan'
+
+gem 'carrierwave'
+gem 'cloudinary'

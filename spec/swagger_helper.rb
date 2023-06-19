@@ -1,19 +1,14 @@
 require 'rails_helper'
 
-security = {
-  bearerAuth: {
-    type: :http,
-    scheme: :bearer,
-    bearerFormat: 'JWT'
-  }
-}
 all_tags = [
-  { name: 'Users', description: 'Operations related to users' },
-  { name: 'Items', description: 'Operations related to items' },
-  { name: 'Sales', description: 'Operations related to Sales' },
-  { name: 'Orders', description: 'Operations related to Orders' },
-  { name: 'Sales-Items', description: 'Operations related to Sales - Items join table' },
-  { name: 'Customers', description: 'Operations related to Customers' }
+  { name: 'Authentication', description: 'Operations related to users' },
+  { name: 'Search', description: 'Operations searching' },
+  { name: 'Users', description: 'Operations related to users' }
+  # { name: 'Items', description: 'Operations related to items' },
+  # { name: 'Sales', description: 'Operations related to Sales' },
+  # { name: 'Orders', description: 'Operations related to Orders' },
+  # { name: 'Sales-Items', description: 'Operations related to Sales - Items join table' },
+  # { name: 'Customers', description: 'Operations related to Customers' }
 ]
 
 RSpec.configure do |config|
@@ -35,18 +30,207 @@ RSpec.configure do |config|
         title: 'API V1',
         version: 'v1'
       },
-      paths: {},
+      # paths: {},
       components: {
-        securitySchemes: security
+        securitySchemes: {
+          bearer_auth: {
+            type: :http,
+            scheme: :bearer,
+            bearerFormat: JWT
+          }
+        },
+        schemas: {
+          user_registration: {
+            type: :object,
+            properties: {
+              first_name: {
+                type: :string, default: 'James'
+              },
+              last_name: {
+                type: :string, default: 'Smith'
+              },
+              username: {
+                type: :string, default: 'developer'
+              },
+              email: {
+                type: :string, default: 'developer@inventory.com'
+              },
+              password: {
+                type: :string, default: 'password'
+              },
+              password_confirmation: {
+                type: :string, default: 'password'
+              }
+            }
+          },
+          user_login: {
+            type: :object,
+            properties: {
+              email: { type: :string, default: 'developer@inventory.com' },
+              password: { type: :string, default: 'password' }
+            }
+          }
+        }
       },
       tags: all_tags,
       security: [{ bearerAuth: [] }],
+      paths: {
+        '/api/v1/auth/signup': {
+          post: {
+            tags: ['Authentication'],
+            summary: 'Creates a new user',
+            consumes: ['application/json'],
+            produces: ['application/json'],
+            parameters: [
+              {
+                in: :body,
+                name: :user,
+                schema: {
+                  type: :object,
+                  properties: {
+                    user: {
+                      type: :object,
+                      '$ref': '#/components/schemas/user_registration'
+                    }
+                  }
+                },
+                required: true
+              }
+            ],
+            responses: {
+              '200': {
+                description: 'User created'
+              },
+              '401': {
+                description: 'User already exists'
+              },
+              '422': {
+                description: 'Invalid request'
+              },
+              '500': {
+                description: 'Internal server error'
+              }
+            }
+          }
+        },
+        '/api/v1/auth/login': {
+          post: {
+            tags: ['Authentication'],
+            summary: 'Logs in a user',
+            consumes: ['application/json'],
+            produces: ['application/json'],
+            parameters: [
+              {
+                in: :body,
+                name: :user,
+                schema: {
+                  type: :object,
+                  properties: {
+                    user: {
+                      type: :object,
+                      '$ref': '#/components/schemas/user_login'
+                    }
+                  }
+                },
+
+                required: true
+              }
+            ],
+            responses: {
+              '200': {
+                description: 'User created'
+              }
+            }
+          }
+        },
+        '/api/v1/auth/logout': {
+          delete: {
+            tags: ['Authentication'],
+            security: [{ bearer_auth: [] }],
+            summary: 'Logs out current logged in user',
+            description: '',
+            operationId: 'logout',
+            parameters: [],
+            responses: {
+              default: {
+                description: 'Success'
+              }
+            }
+          }
+
+        },
+        '/api/v1/auth/me': {
+          get: {
+            tags: ['Users'],
+            security: [{ bearer_auth: [] }],
+            summary: 'Returns current logged in user',
+            description: '',
+            operationId: 'me',
+            parameters: [],
+            responses: {
+              default: {
+                description: 'Success'
+              }
+            }
+          }
+        },
+        '/api/v1/users/show/{username}': {
+          get: {
+            tags: ['Users'],
+            security: [{ bearer_auth: [] }],
+            summary: 'Returns user by username',
+            description: '',
+            operationId: 'getUser',
+            parameters: [
+              {
+                name: 'username',
+                in: :path,
+                description: 'Username of user',
+                required: true,
+                schema: {
+                  type: :string
+                }
+              }
+            ],
+            responses: {
+              default: {
+                description: 'Success'
+              }
+            }
+          }
+        },
+        '/api/v1/search?username={username}': {
+          get: {
+            tags: ['Search'],
+            security: [{ bearer_auth: [] }],
+            summary: 'Searches for a user by username',
+            description: '',
+            operationId: 'searchUser',
+            parameters: [
+              {
+                in: :query,
+                name: :username,
+                description: 'Username to search for',
+                required: true,
+                schema: {
+                  type: :string
+                }
+              }
+            ],
+            responses: {
+              default: {
+                description: 'Success'
+              }
+            }
+          }
+        }
+      },
       servers: [
         {
-          url: 'http://{defaultHost}',
+          url: 'http://{localhost}',
           variables: {
-            defaultHost: {
-              default: '127.0.0.1:3000'
+            localhost: {
+              default: '127.0.0.1:4000'
             }
           }
         }

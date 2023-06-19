@@ -11,6 +11,9 @@ class User < ApplicationRecord
 
   friendly_id :slug_candidates, use: :slugged
 
+  validates :first_name, :last_name, :username, :email, presence: true
+  validates :username, uniqueness: true, length: { minimum: 3, maximum: 50 }
+
   def slug_candidates
     [
       :first_name,
@@ -22,4 +25,10 @@ class User < ApplicationRecord
   def to_param
     slug
   end
+
+  mount_uploader :avatar, ImageUploader
+
+  scope :search, lambda { |query|
+                   query.present? ? where('username ILIKE ? OR first_name ILIKE ? OR last_name ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%") : none
+                 }
 end
