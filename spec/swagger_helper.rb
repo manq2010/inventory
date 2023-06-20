@@ -159,6 +159,21 @@ RSpec.configure do |config|
           }
 
         },
+        '/api/v1/users': {
+          get: {
+            tags: ['Users'],
+            security: [{ bearer_auth: [] }],
+            summary: 'Returns all users',
+            description: '',
+            operationId: 'getUsers',
+            parameters: [],
+            responses: {
+              default: {
+                description: 'Success'
+              }
+            }
+          }
+        },
         '/api/v1/auth/me': {
           get: {
             tags: ['Users'],

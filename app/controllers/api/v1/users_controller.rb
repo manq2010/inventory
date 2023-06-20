@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   # before_action :set_user, only: %i[show update destroy]
   # skip_before_action :authenticate
   # skip_before_action :authenticate_user
-  before_action :authenticate_user!, only: %i[me show update]
+  before_action :authenticate_user!, only: %i[me show update index]
   before_action :set_user, only: %i[update destroy]
   before_action :set_user_by_username, only: [:show_by_username]
 
