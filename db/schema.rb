@@ -30,7 +30,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_171120) do
     t.string "last_name"
     t.string "username"
     t.string "phone"
-    t.string "role"
+    t.string "role", default: "user", null: false
     t.string "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

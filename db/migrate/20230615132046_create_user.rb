@@ -5,7 +5,7 @@ class CreateUser < ActiveRecord::Migration[7.0]
       t.string :last_name
       t.string :username
       t.string :phone
-      t.string :role
+      t.string :role, null: false, default: "user"
       t.string :slug, :null => false
 
       t.timestamps
