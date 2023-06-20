@@ -1,20 +1,20 @@
 class Api::V1::UsersController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  # rescue_from ActiveRecord::RecordNotFound, with: :not_found
   # before_action :set_user, only: %i[show update destroy]
-  # skip_before_action :authenticate, only: [:create]
   # skip_before_action :authenticate
+  # skip_before_action :authenticate_user
   before_action :authenticate_user!, only: %i[me show update]
   before_action :set_user, only: %i[update destroy]
   before_action :set_user_by_username, only: [:show_by_username]
-
-  def me
-    render json: current_user, status: :ok
-  end
 
   def index
     users = User.all
     # render json: @users
     render json: users
+  end
+
+  def me
+    render json: current_user, status: :ok
   end
 
   def show
@@ -101,9 +101,9 @@ class Api::V1::UsersController < ApplicationController
       )
   end
 
-  def not_found
-    render json: { error: 'Not Found' }, status: :not_found
-  end
+  # def not_found
+  #   render json: { error: 'Not Found' }, status: :not_found
+  # end
 
   def set_user_by_username
     @user = User.find_by(username: params[:username])

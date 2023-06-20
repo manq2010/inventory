@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
       get '/search', to: 'users#search'
       
-      resources :users 
+      resources :users
     end
   end
 
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
                  }, defaults: { format: :json }
       devise_scope :user do
         get '/auth/me', to: 'api/v1/users#me', as: :user_root
-        get '/auth/users', to: 'api/v1/users#index', as: :users
+        get '/users', to: 'api/v1/users#index', as: :users
         get '/auth/users/:id', to: 'api/v1/users#show', as: :user
         get '/users/show/:username', to: 'api/v1/users#show_by_username', as: :show_by_username
         put '/auth/users/:id', to: 'api/v1/users#update', as: :update_user
