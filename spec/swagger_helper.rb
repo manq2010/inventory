@@ -61,7 +61,8 @@ RSpec.configure do |config|
               password_confirmation: {
                 type: :string, default: 'password'
               }
-            }
+            },
+            required: [ 'first_name', 'last_name', 'username' ]
           },
           user_login: {
             type: :object,
