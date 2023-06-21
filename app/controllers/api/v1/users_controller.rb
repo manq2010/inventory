@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   # before_action :set_user, only: %i[show update destroy]
   # skip_before_action :authenticate
   # skip_before_action :authenticate_user
-  before_action :authenticate_user!, only: %i[me show update index]
+  before_action :authenticate_user!, only: %i[me show update]
   before_action :set_user, only: %i[update destroy]
   before_action :set_user_by_username, only: [:show_by_username]
 
@@ -19,9 +19,24 @@ class Api::V1::UsersController < ApplicationController
 
   def show
     user = User.friendly.find(params[:id])
+    # user = User.find(params[:id])
+    users = User.all_except(current_user)
+
+    rooms = Room.public_rooms
+    room_name = get_name(user, current_user)
+
+    single_room = Room.where(name: room_name).first || Room.create_private_room([user, current_user], room_name)
+
+    messages = single_room.messages.order(created_at: :asc)
+
     if user
       render json: {
-        user: user
+        user: user,
+        users: users,
+        rooms: rooms,
+        room_name: room_name,
+        single_room: single_room,
+        messages: messages
       }, status: :ok
     else
       render json: {
@@ -48,7 +63,9 @@ class Api::V1::UsersController < ApplicationController
 
   # def create
   #   user = User.new(user_params)
+  ##   ActionCable.server.broadcast('user_channel', user) if user.save
   #   if user.save
+  #     ActionCable.server.broadcast('user_channel', user)
   #     render json: { message: 'User created successfully' }, status: :created
   #   else
   #     render json: { error: "username #{user.errors[:name].first}" }, status: :bad_request
@@ -114,5 +131,11 @@ class Api::V1::UsersController < ApplicationController
     render json: {
       errors: object.errors.full_messages
     }, status: status
+  end
+
+  def get_name(user1, user2)
+    user = [user1, user2].sort
+    # "private_#{user[0].id}_#{user[1].id}"
+    "private_#{user[0].slug}_#{user[1].slug}"
   end
 end

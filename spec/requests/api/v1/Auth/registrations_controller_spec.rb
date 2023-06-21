@@ -10,13 +10,13 @@ describe Api::V1::Auth::RegistrationsController, type: :request do
       post signup_url,
            params: {
              user: {
-              id: user.id,
-              first_name: user.first_name,
-              last_name: user.last_name,
-              username: user.username,
-              email: user.email,
-              password: user.password,
-              password_confirmation: user.password_confirmation
+               id: user.id,
+               first_name: user.first_name,
+               last_name: user.last_name,
+               username: user.username,
+               email: user.email,
+               password: user.password,
+               password_confirmation: user.password_confirmation
              }
            }
     end

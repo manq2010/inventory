@@ -16,6 +16,7 @@ class Api::V1::Auth::RegistrationsController < Devise::RegistrationsController
 
   def respond_with(resource, _options = {})
     if request.method === 'POST' && resource.persisted?
+      # ActionCable.server.broadcast('user_channel', user) if user.save
       render json: {
         status: { code: 200, message: 'Signed up successfully' },
         # data: UserSerializer.new(resource).serializable_hash[:data][:attributes]

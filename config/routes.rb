@@ -1,32 +1,32 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
-
+  
   namespace :api do
     namespace :v1 do
-
+      
       get '/search', to: 'users#search'
-      end
+    end
   end
 
   get '/member-data', to: 'members#show'
   get 'current_user', to: 'current_user#index' 
-
+  
   get 'users/index'
   scope :api do
     scope :v1 do
       devise_for :users,
-                 path: 'auth',
+      path: 'auth',
                  path_names: {
                    sign_in: 'login',
                    sign_out: 'logout',
                    registration: 'signup'
-                 },
-                 controllers: {
+                  },
+                  controllers: {
                    registrations: 'api/v1/auth/registrations',
                    sessions: 'api/v1/auth/sessions',
                  }, defaults: { format: :json }
-      devise_scope :user do
+                 devise_scope :user do
         get '/auth/me', to: 'api/v1/users#me', as: :user_root
         get '/users', to: 'api/v1/users#index', as: :users
         get '/auth/users/:id', to: 'api/v1/users#show', as: :user
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   end
   
   root to: redirect('/api-docs')
-
+  
   # config/routes.rb
 namespace :api do
   namespace :v1 do
@@ -55,10 +55,14 @@ namespace :api do
         delete 'items/:item_id', to: 'items_sales#delete_item'
       end
     end
+    resources :rooms
+      get '/rooms', to: 'api/v1/rooms#index'
+      get '/rooms/:room_id', to: 'api/v1/rooms#show'
+      resources :messages
+    end
     resources :orders
     # post '/signup', to: 'users#create'
   end
 end
 
 # post '/login', to: 'sessions#create'
-end

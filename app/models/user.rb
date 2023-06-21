@@ -11,6 +11,7 @@ class User < ApplicationRecord
 
   friendly_id :slug_candidates, use: :slugged
 
+  # validates_uniqueness_of :email
   validates :first_name, :last_name, :username, :email, presence: true
   validates :username, uniqueness: true, length: { minimum: 3, maximum: 50 }
 
@@ -31,4 +32,8 @@ class User < ApplicationRecord
   scope :search, lambda { |query|
                    query.present? ? where('username ILIKE ? OR first_name ILIKE ? OR last_name ILIKE ?', "%#{query}%", "%#{query}%", "%#{query}%") : none
                  }
+
+  scope :all_except, ->(user) { where.not(id: user) }
+  # after_create_commit { broadcast_append_to 'users' }
+  has_many :messages
 end

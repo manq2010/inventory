@@ -62,7 +62,7 @@ RSpec.configure do |config|
                 type: :string, default: 'password'
               }
             },
-            required: [ 'first_name', 'last_name', 'username' ]
+            required: %w[first_name last_name username]
           },
           user_login: {
             type: :object,
