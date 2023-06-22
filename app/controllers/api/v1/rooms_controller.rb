@@ -41,9 +41,9 @@ class Api::V1::RoomsController < ApplicationController
   end
 
   def create
-    room = Room.new(user_params)
+    room = Room.new(room_params)
     if room.save
-      ActionCable.server.broadcast('room_channel', room) unless room.is_private
+      # ActionCable.server.broadcast('room_channel', room) unless room.is_private
       render json: { message: 'Room created successfully' }, status: :created
     else
       render json: { error: room.errors }, status: :bad_request
@@ -52,7 +52,7 @@ class Api::V1::RoomsController < ApplicationController
 
   private
 
-  def user_params
+  def room_params
     params.require(:room)
       .permit(
         :name

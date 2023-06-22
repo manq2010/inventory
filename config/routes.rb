@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+
+  # action cable server
+  mount ActionCable.server => '/cable'
   
   namespace :api do
     namespace :v1 do
@@ -39,7 +42,7 @@ Rails.application.routes.draw do
     end
   end
   
-  root to: redirect('/api-docs')
+  # root to: redirect('/api-docs')
   
   # config/routes.rb
 namespace :api do

@@ -9,7 +9,7 @@ class Api::V1::MessagesController < ApplicationController
     message = current_user.messages.create(body: msg_params[:body], room_id: params[:room_id])
 
     if message.save
-      ActionCable.server.broadcast('room_channel', message)
+      # ActionCable.server.broadcast('room_channel', message)
       render json: { message: message }, status: :ok
     else
       render json: { error: message.errors }, status: :bad_request
