@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   get '/member-data', to: 'members#show'
-  get 'current_user', to: 'current_user#index' 
+  get '/current_user', to: 'current_user#index' 
   
   get 'users/index'
   scope :api do
@@ -30,9 +30,9 @@ Rails.application.routes.draw do
                    sessions: 'api/v1/auth/sessions',
                  }, defaults: { format: :json }
                  devise_scope :user do
-        get '/auth/me', to: 'api/v1/users#me', as: :user_root
+        get '/users/me', to: 'api/v1/users#me'
         get '/users', to: 'api/v1/users#index', as: :users
-        get '/auth/users/:id', to: 'api/v1/users#show', as: :user
+        get '/users/:id', to: 'api/v1/users#show', as: :user
         get '/users/show/:username', to: 'api/v1/users#show_by_username', as: :show_by_username
         put '/auth/users/:id', to: 'api/v1/users#update', as: :update_user
         delete '/auth/users', to: 'api/v1/users#destroy', as: :destroy_user

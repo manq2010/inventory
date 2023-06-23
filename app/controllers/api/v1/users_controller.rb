@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   # before_action :set_user, only: %i[show update destroy]
   # skip_before_action :authenticate
   # skip_before_action :authenticate_user
-  before_action :authenticate_user!, only: %i[me show update]
+  before_action :authenticate_user!, only: %i[update]
   before_action :set_user, only: %i[update destroy]
   before_action :set_user_by_username, only: [:show_by_username]
 
@@ -18,8 +18,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    user = User.friendly.find(params[:id])
-    # user = User.find(params[:id])
+    # user = User.friendly.find(params[:id])
+    user = User.find(params[:id])
     users = User.all_except(current_user)
 
     rooms = Room.public_rooms

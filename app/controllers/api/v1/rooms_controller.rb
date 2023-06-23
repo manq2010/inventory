@@ -1,5 +1,5 @@
 class Api::V1::RoomsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[show]
   # before_action :set_room, only: %i[create update destroy]
 
   def index
@@ -9,9 +9,9 @@ class Api::V1::RoomsController < ApplicationController
     users = User.all_except(current_user)
     # render json: @users
     render json: {
-      user: current_user,
+      # user: current_user,
       rooms: rooms,
-      users: users
+      # users: users
     }, status: :ok
   end
 
